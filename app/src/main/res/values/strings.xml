@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">sostener</string>
+    <string name="prefs_file">com.example.PREFERENCE_FILE_KEY</string>
+    <string name="default_web_client_id" translatable="false">575709249161-poour6toesn4ge5rqgl0l5j0rc8kpadn.apps.googleusercon</string>
 </resources>
