@@ -3,6 +3,7 @@ package com.example.contener
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -21,6 +22,9 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        getSupportActionBar()?.hide(); // hide the title bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
+
         mAuth = FirebaseAuth.getInstance()
 
 
@@ -38,6 +42,7 @@ class Home : AppCompatActivity() {
         val auth = Firebase.auth
         val user = auth.currentUser
 
+
         if (user != null) {
             val userName = user.displayName
             textView.text = "Welcome, " + userName
@@ -47,10 +52,18 @@ class Home : AppCompatActivity() {
 
 
 
-// Inside onCreate() method
+        // Inside onCreate() method
         val sign_out_button = findViewById<Button>(R.id.Logout)
         sign_out_button.setOnClickListener {
             signOutAndStartSignInActivity()
+        }
+
+        //Epecemos Boton
+        val empecemosButton = findViewById<Button>(R.id.empecemosButton)
+        empecemosButton.setOnClickListener {
+            val intent = Intent(this, formularioHome::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
