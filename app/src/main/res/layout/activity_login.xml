@@ -24,8 +24,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="#3949AB"
+        android:background="@drawable/button_redondo_azul"
         android:text="Facebook"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/googleButton"
         app:layout_constraintStart_toStartOf="@+id/googleButton"
         app:layout_constraintTop_toBottomOf="@+id/googleButton" />
@@ -69,7 +70,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="150dp"
         android:text="Inicia sesion con"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -83,5 +84,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/path28" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/facebookButton"
+        app:layout_constraintStart_toStartOf="@+id/facebookButton"
+        app:layout_constraintTop_toTopOf="@+id/facebookButton"
+        app:srcCompat="@drawable/com_facebook_button_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

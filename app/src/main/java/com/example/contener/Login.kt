@@ -11,6 +11,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.FacebookSdk
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -33,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var mauth: FirebaseAuth
 
-    private lateinit var callbackManager: CallbackManager
+    private var callbackManager = CallbackManager.Factory.create()
 
     private lateinit var signInFacebook: Button
 
@@ -66,77 +71,47 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Login Facebook
+        signInFacebook = findViewById(R.id.facebookButton)
+        signInFacebook.setOnClickListener {
 
-
-        /*FacebookSdk.sdkInitialize(this)
-        // Initialize Facebook Login button
-        callbackManager = CallbackManager.Factory.create()
-
-        val buttonFacebookLogin = findViewById<LoginButton>(R.id.facebookButton)
-        buttonFacebookLogin.setReadPermissions("email", "public_profile")
-        buttonFacebookLogin.registerCallback(
-            callbackManager,
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
+            Log.e("A","1")
+            LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult> {
-                override fun onSuccess(loginResult: LoginResult) {
-                    Log.d(TAG, "facebook:onSuccess:$loginResult")
-                    handleFacebookAccessToken(loginResult.accessToken)
-                }
-
                 override fun onCancel() {
-                    Log.d(TAG, "facebook:onCancel")
+                    Log.e("A", "4")
                 }
 
                 override fun onError(error: FacebookException) {
-                    Log.d(TAG, "facebook:onError", error)
+                    Log.e("A", "2")
                 }
-            },
-        )*/
-    }
 
-    private fun handleFacebookAccessToken(token: AccessToken) {
-        Log.d(TAG, "handleFacebookAccessToken:$token")
+                override fun onSuccess(result: LoginResult) {
+                    Log.e("A","3")
+                    result?.let {
+                        val token = it.accessToken
 
-        val credential = FacebookAuthProvider.getCredential(token.token)
+                        val credential = FacebookAuthProvider.getCredential(token.token)
+                        Log.e("credential", credential.toString()+"m")
+                        FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
 
-        mauth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
-                    val user = mauth.currentUser
-                    Toast.makeText(
-                        baseContext,
-                        "1",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                    updateUI(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    Toast.makeText(
-                        baseContext,
-                        "Authentication failed.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
-                    updateUI(null)
+                            if (it.isSuccessful){
+                                val intent = Intent(this@MainActivity, Home::class.java)
+                                startActivity(intent)
+                                finish()
+                                Log.e("A","5")
+                            }else{
+                                Log.e("A","6")
+                            }
+
+                        }
+                    }
                 }
-            }
-    }
 
-    private fun updateUI(user: FirebaseUser?) {
-        if(user != null){
-            val intent = Intent(this, Home::class.java)
-            val value = PendingIntent.getActivity (this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-            startActivity(intent)
-        }else{
-            Toast.makeText(
-                baseContext,
-                "Please sign in to continue",
-                Toast.LENGTH_SHORT,
-            ).show()
+            })
+
         }
     }
-
 
     private fun signIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -151,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        //callbackManager.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
 
         super.onActivityResult(requestCode, resultCode, data)
 
