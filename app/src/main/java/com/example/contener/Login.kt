@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         signInFacebook.setOnClickListener {
 
             LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
-            Log.e("A","1")
+
             LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onCancel() {
@@ -87,23 +87,21 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onSuccess(result: LoginResult) {
-                    Log.e("A","3")
+
                     result?.let {
                         val token = it.accessToken
 
                         val credential = FacebookAuthProvider.getCredential(token.token)
-                        Log.e("credential", credential.toString()+"m")
+
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
 
                             if (it.isSuccessful){
                                 val intent = Intent(this@MainActivity, Home::class.java)
                                 startActivity(intent)
                                 finish()
-                                Log.e("A","5")
                             }else{
-                                Log.e("A","6")
+                                Toast.makeText(this@MainActivity, "No pudimos iniciar sesion con Facebook, es probable que ya tengas una cuenta", Toast.LENGTH_SHORT).show()
                             }
-
                         }
                     }
                 }
