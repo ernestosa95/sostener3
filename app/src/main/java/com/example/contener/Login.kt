@@ -100,7 +100,8 @@ class MainActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                             }else{
-                                Toast.makeText(this@MainActivity, "No pudimos iniciar sesion con Facebook, es probable que ya tengas una cuenta", Toast.LENGTH_SHORT).show()
+                                signIn()
+                                //Toast.makeText(this@MainActivity, "No pudimos iniciar sesion con Facebook, es probable que ya tengas una cuenta", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

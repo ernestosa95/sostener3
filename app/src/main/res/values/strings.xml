@@ -9,4 +9,5 @@
     <string name="facebook_client_token">2b0426051d7bc83cc2f218e0b7f9c8d0</string>
 
     <string name="text_binvenida_1">Soy una aplicación móvil que te brinda material escrito y audiovisual para la promoción y la prevención en salud mental perinatal y de apoyo a la lactancia materna.</string>
+    <string name="description_intereses">Selecciona los temas que mas te interesan, de esa forma voy a poder mostrarte contenido personalizado</string>
 </resources>

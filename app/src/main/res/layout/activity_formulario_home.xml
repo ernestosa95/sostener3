@@ -32,11 +32,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
         android:text="Yo soy"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/npET"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,14 +44,13 @@
         android:id="@+id/npET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:ems="10"
         android:gravity="center_horizontal"
         android:hint="Nombre y apellido"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView7"
@@ -78,41 +77,47 @@
         app:layout_constraintTop_toBottomOf="@+id/date" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/cuantosHijos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10">
-
-        <CheckBox
-            android:id="@+id/siHijos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Si"
-            app:layout_constraintBottom_toBottomOf="@+id/hijosCuantos"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/hijosCuantos" />
+        app:layout_constraintEnd_toEndOf="@+id/radioGroup2"
+        app:layout_constraintStart_toStartOf="@+id/radioGroup2"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup2">
 
         <EditText
             android:id="@+id/hijosCuantos"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:ems="10"
+            android:gravity="center_horizontal"
             android:hint="¿Cuantos?"
             android:inputType="number"
-            app:layout_constraintStart_toEndOf="@+id/siHijos" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="El ultimo nacio el"
+            android:layout_marginEnd="10dp"
+            android:text="El ultimo nacio el:"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/hijosCuantos"
-            app:layout_constraintStart_toStartOf="@+id/siHijos"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hijosCuantos" />
+
+        <TextView
+            android:id="@+id/dateLastSon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="DD/MM/AAAA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView9"
+            app:layout_constraintTop_toTopOf="@+id/textView9" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -127,16 +132,6 @@
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/SPDGralMultipleSelection" />
 
-    <CheckBox
-        android:id="@+id/noHijos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="NO"
-        app:layout_constraintEnd_toEndOf="@+id/SPDGralMultipleSelection"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
-
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
@@ -147,7 +142,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/cuantosHijos" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -159,21 +154,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11">
 
         <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
-            android:text="No" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/siEmbarazo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="25dp"
             android:text="Si" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/noEmbarazo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:text="No" />
+
+        <RadioButton
+            android:id="@+id/noloseEmbarazo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="No lo se" />
@@ -218,5 +213,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+        <RadioButton
+            android:id="@+id/siHijos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="50dp"
+            android:text="Si" />
+
+        <RadioButton
+            android:id="@+id/noHijos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

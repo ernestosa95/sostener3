@@ -3,9 +3,11 @@ package com.example.contener
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -25,8 +27,9 @@ class Home : AppCompatActivity() {
         getSupportActionBar()?.hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
 
-        mAuth = FirebaseAuth.getInstance()
+        val myPreferences = PreferenceManager.getDefaultSharedPreferences(this@Home)
 
+        mAuth = FirebaseAuth.getInstance()
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -35,35 +38,32 @@ class Home : AppCompatActivity() {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-
-
-        val textView = findViewById<TextView>(R.id.textView)
+        val textView = findViewById<TextView>(R.id.binvenidoHome)
 
         val auth = Firebase.auth
         val user = auth.currentUser
 
-
         if (user != null) {
             val userName = user.displayName
-            textView.text = "Welcome, " + userName
+            textView.text = "Hola, " + userName
         } else {
             // Handle the case where the user is not signed in
-        }
-
-
-
-        // Inside onCreate() method
-        val sign_out_button = findViewById<Button>(R.id.Logout)
-        sign_out_button.setOnClickListener {
             signOutAndStartSignInActivity()
+            Toast.makeText(this, "Debemos pedirte que te vuelvas a loguear", Toast.LENGTH_SHORT).show()
         }
 
         //Epecemos Boton
         val empecemosButton = findViewById<Button>(R.id.empecemosButton)
         empecemosButton.setOnClickListener {
-            val intent = Intent(this, formularioHome::class.java)
-            startActivity(intent)
-            finish()
+            if (myPreferences.getString("sex", "unknown").equals("unknown") || myPreferences.getString("p1", "unknown").equals("unknown")) {
+                val intent = Intent(this, formularioHome::class.java)
+                startActivity(intent)
+                finish()
+            }else{
+                val intent = Intent(this, HomePrincipal::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
     }
 
@@ -76,5 +76,10 @@ class Home : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        signOutAndStartSignInActivity()
     }
 }
