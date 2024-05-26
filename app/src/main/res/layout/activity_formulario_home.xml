@@ -187,24 +187,6 @@
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Departamento"
-        app:layout_constraintStart_toStartOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:text="Localidad"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
-        app:layout_constraintTop_toTopOf="@+id/textView13" />
-
-    <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -236,5 +218,21 @@
             android:layout_height="wrap_content"
             android:text="No" />
     </RadioGroup>
+
+    <AutoCompleteTextView
+        android:id="@+id/autoDeptos"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Departamentos"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoLocalidades"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Localidades"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/autoDeptos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

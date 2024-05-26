@@ -1,6 +1,7 @@
 package com.example.contener
 
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -65,6 +66,8 @@ class Home : AppCompatActivity() {
                 finish()
             }
         }
+
+
     }
 
     private fun signOutAndStartSignInActivity() {

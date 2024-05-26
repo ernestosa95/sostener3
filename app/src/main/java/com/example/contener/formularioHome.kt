@@ -2,12 +2,14 @@ package com.example.contener
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
@@ -15,16 +17,23 @@ import android.widget.RadioButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
 
 
 class formularioHome : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
+
+    private val DB_PATH = "/app/src/main/assets/database/"
+    private val DB_NAME = "data.sqlite"
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formulario_home)
@@ -116,8 +125,56 @@ class formularioHome : AppCompatActivity() {
             val txt = user.photoUrl
         }
 
-        // Siguiente Button
+        //Localidades
+        val valores = leerCSV()
+        var deptos_data = arrayOf<String?>()
+        var localidades_data = arrayOf<String?>()
 
+        val aux = deptos_data.toMutableList()
+        val aux_loca = localidades_data.toMutableList()
+        for (valo in valores){
+
+            aux.add(valo[1])
+            aux_loca.add(valo[0])
+
+        }
+        val unique = HashSet(aux)
+        deptos_data = unique.toTypedArray()
+
+        // Deptos
+        val deptos = findViewById<AutoCompleteTextView>(R.id.autoDeptos)
+
+        val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
+            this,
+            com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+            deptos_data
+        )
+        deptos.setAdapter(adapter)
+        deptos.threshold = 1
+
+        // Localidades
+        val localidades = findViewById<AutoCompleteTextView>(R.id.autoLocalidades)
+
+        val adapter_localidades : ArrayAdapter<*> = ArrayAdapter<Any?>(
+            this,
+            com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+            aux_loca.toTypedArray()
+        )
+        localidades.setAdapter(adapter_localidades)
+        localidades.threshold = 1
+
+        localidades.setOnFocusChangeListener{ view: View, b: Boolean ->
+            if ( deptos.text.isNotEmpty()){
+                localidades.setEnabled (true)
+                //TODO: filtrar por departamentos
+                //Toast.makeText(this, "localidades ok", Toast.LENGTH_SHORT).show()
+            }else{
+                localidades.setEnabled (false)
+                Toast.makeText(this, "Debe seleccionar el departamento", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Siguiente Button
         val siguienteButton = findViewById<Button>(R.id.siguienteFormHomeButton)
         siguienteButton.setOnClickListener {
 
@@ -210,6 +267,26 @@ class formularioHome : AppCompatActivity() {
         }
         val cancel = view1.findViewById<Button>(R.id.CANCELARDATE)
         cancel.setOnClickListener { dialog.dismiss() }
+    }
+
+    fun leerCSV(): List<List<String>> {
+        val lineas = mutableListOf<List<String>>()
+        //val lector = BufferedReader(FileReader(this.packageResourcePath.))
+        val inputStream: InputStream = this.resources.openRawResource(R.raw.data)
+        val lector = BufferedReader(InputStreamReader(inputStream, Charsets.UTF_8))
+
+        try {
+            var linea: String? = null
+            while (lector.readLine().also { linea = it } != null) {
+                val valoresLinea = linea!!.split(",")
+                //Log.e("marcador data", linea.toString())
+                lineas.add(valoresLinea.map { it.trim() })
+            }
+        } finally {
+            lector.close()
+        }
+
+        return lineas
     }
 
     override fun onBackPressed() {
