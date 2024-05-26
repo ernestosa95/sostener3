@@ -159,16 +159,6 @@ class formularioHome : AppCompatActivity() {
             localidades.setEnabled (true)
         }
 
-
-
-        /*val adapter_localidades : ArrayAdapter<*> = ArrayAdapter<Any?>(
-            this,
-            com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
-            aux_loca.toTypedArray()
-        )
-        localidades.setAdapter(adapter_localidades)
-        localidades.threshold = 1*/
-
         localidades.setOnFocusChangeListener{ view: View, b: Boolean ->
             if ( deptos.text.isNotEmpty()){
                 localidades.setEnabled (true)
@@ -228,8 +218,8 @@ class formularioHome : AppCompatActivity() {
                                         "cantidad_hijos" to canHijos,
                                         "ultimo_hijo" to fechaUltimoNacimiento,
                                         "embarazo" to embarazo,
-                                        "departamento" to depto,
-                                        "localidad" to localidad,
+                                        "departamento" to deptos.text.toString(),
+                                        "localidad" to localidades.text.toString(),
                                         "otraLocalidad" to otraLocalidad
                                     )
                                 )
@@ -244,8 +234,8 @@ class formularioHome : AppCompatActivity() {
                                 myEditor.putString("cantidad_hijos", canHijos);
                                 myEditor.putString("ultimo_hijo", fechaUltimoNacimiento);
                                 myEditor.putString("embarazo", embarazo);
-                                myEditor.putString("departamento", depto);
-                                myEditor.putString("localidad", localidad);
+                                myEditor.putString("departamento", deptos.text.toString());
+                                myEditor.putString("localidad", localidades.text.toString());
                                 myEditor.putString("otralocalidad", otraLocalidad);
                                 myEditor.commit();
 
