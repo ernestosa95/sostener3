@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -154,20 +155,40 @@ class formularioHome : AppCompatActivity() {
 
         // Localidades
         val localidades = findViewById<AutoCompleteTextView>(R.id.autoLocalidades)
+        deptos.setOnItemClickListener { adapterView, view, i, l ->
+            localidades.setEnabled (true)
+        }
 
-        val adapter_localidades : ArrayAdapter<*> = ArrayAdapter<Any?>(
+
+
+        /*val adapter_localidades : ArrayAdapter<*> = ArrayAdapter<Any?>(
             this,
             com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
             aux_loca.toTypedArray()
         )
         localidades.setAdapter(adapter_localidades)
-        localidades.threshold = 1
+        localidades.threshold = 1*/
 
         localidades.setOnFocusChangeListener{ view: View, b: Boolean ->
             if ( deptos.text.isNotEmpty()){
                 localidades.setEnabled (true)
                 //TODO: filtrar por departamentos
                 //Toast.makeText(this, "localidades ok", Toast.LENGTH_SHORT).show()
+                val aux_loca_new = localidades_data.toMutableList()
+                for (valo in valores){
+                    //Log.e(valo[1], valo[0] +"-"+deptos.text)
+                    if(valo[1] == deptos.text.toString()) {
+                        aux_loca_new.add(valo[0])
+                        //Log.e(valo[1], valo[0])
+                    }
+                }
+                val adapter_localidades : ArrayAdapter<*> = ArrayAdapter<Any?>(
+                    this,
+                    com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+                    aux_loca_new.toTypedArray()
+                )
+                localidades.setAdapter(adapter_localidades)
+                localidades.threshold = 1
             }else{
                 localidades.setEnabled (false)
                 Toast.makeText(this, "Debe seleccionar el departamento", Toast.LENGTH_SHORT).show()
