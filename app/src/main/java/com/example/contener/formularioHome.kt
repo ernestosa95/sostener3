@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -60,6 +59,8 @@ class formularioHome : AppCompatActivity() {
         val siEmbarazo : RadioButton = findViewById(R.id.siEmbarazo)
         val noEmbarazo : RadioButton = findViewById(R.id.noEmbarazo)
         val noloseEmbarazo : RadioButton = findViewById(R.id.noloseEmbarazo)
+        val deptos = findViewById<AutoCompleteTextView>(R.id.autoDeptos)
+        val localidades = findViewById<AutoCompleteTextView>(R.id.autoLocalidades)
 
         noHijos.setOnClickListener {
             cantidadHijos.isEnabled = false
@@ -106,6 +107,17 @@ class formularioHome : AppCompatActivity() {
         var localidad : String = ""
         var otraLocalidad : String = ""
 
+        //
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (preferences.getString("birthdate", "").toString()!=""){bdDate.setText(preferences.getString("birthdate", "").toString())}
+        if (preferences.getString("cantidad_hijos", "").toString()!=""){cantidadHijos.setText(preferences.getString("cantidad_hijos", "").toString())}
+        if (preferences.getString("ultimo_hijo", "").toString()!=""){dateLastSon.setText(preferences.getString("ultimo_hijo", "").toString())}
+        if (preferences.getString("departamento", "").toString()!=""){deptos.setText(preferences.getString("departamento", "").toString())}
+        if (preferences.getString("localidad", "").toString()!=""){localidades.setText(preferences.getString("localidad", "").toString())}
+
+
+
+
         siHijos.setOnClickListener {
             cantidadHijos.setEnabled(true)
         }
@@ -143,7 +155,7 @@ class formularioHome : AppCompatActivity() {
         deptos_data = unique.toTypedArray()
 
         // Deptos
-        val deptos = findViewById<AutoCompleteTextView>(R.id.autoDeptos)
+
 
         val adapter: ArrayAdapter<*> = ArrayAdapter<Any?>(
             this,
@@ -154,7 +166,7 @@ class formularioHome : AppCompatActivity() {
         deptos.threshold = 1
 
         // Localidades
-        val localidades = findViewById<AutoCompleteTextView>(R.id.autoLocalidades)
+
         deptos.setOnItemClickListener { adapterView, view, i, l ->
             localidades.setEnabled (true)
         }
@@ -255,6 +267,7 @@ class formularioHome : AppCompatActivity() {
     }
 
     private fun FechaPicker(date: TextView) {
+
         val builder = AlertDialog.Builder(this)
         val Inflater = LayoutInflater.from(this)
         val view1: View = Inflater.inflate(R.layout.basic_dialog_date, null)
@@ -278,6 +291,7 @@ class formularioHome : AppCompatActivity() {
         }
         val cancel = view1.findViewById<Button>(R.id.CANCELARDATE)
         cancel.setOnClickListener { dialog.dismiss() }
+
     }
 
     fun leerCSV(): List<List<String>> {

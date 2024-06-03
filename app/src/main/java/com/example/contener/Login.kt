@@ -1,19 +1,19 @@
 package com.example.contener
 
-import android.app.PendingIntent
-import android.content.ContentValues.TAG
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.AccessToken
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -21,7 +21,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
 
@@ -40,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private var callbackManager = CallbackManager.Factory.create()
 
-    private lateinit var signInFacebook: Button
+    private lateinit var signInFacebook: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Splash
@@ -54,9 +53,30 @@ class MainActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-
-
         val currentUser = auth.currentUser
+        val iniciaSesion = findViewById<Button>(R.id.IniciaSesion)
+        iniciaSesion.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val Inflater = LayoutInflater.from(this)
+            val view: View = Inflater.inflate(R.layout.init_alert, null)
+            view.isFocusable = true
+            builder.setView(view)
+            //builder.setCancelable(false)
+            val dialog = builder.create()
+            dialog.show()
+        }
+
+        val register = findViewById<Button>(R.id.registrate)
+        register.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val Inflater = LayoutInflater.from(this)
+            val view: View = Inflater.inflate(R.layout.register_alert, null)
+            view.isFocusable = true
+            builder.setView(view)
+            //builder.setCancelable(false)
+            val dialog = builder.create()
+            dialog.show()
+        }
 
         if (currentUser != null) {
             // The user is already signed in, navigate to MainActivity
@@ -65,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             finish() // finish the current activity to prevent the user from coming back to the SignInActivity using the back button
         }
 
-        val signInButton = findViewById<Button>(R.id.googleButton)
+        val signInButton = findViewById<ConstraintLayout>(R.id.googleButton)
         signInButton.setOnClickListener {
             signIn()
         }

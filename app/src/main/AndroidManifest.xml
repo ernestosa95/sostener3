@@ -19,9 +19,13 @@
         android:theme="@style/Theme.Contener"
         tools:targetApi="31">
         <activity
-            android:name=".HomePrincipal"
+            android:name=".Modulo"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light"/>
+        <activity
+            android:name=".HomePrincipal"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".interesesHome"
             android:exported="false"
