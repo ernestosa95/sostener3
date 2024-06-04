@@ -15,7 +15,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout5">
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/registerBTN"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -30,10 +30,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
+            app:layout_constraintTop_toBottomOf="@+id/passEDT" />
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/correoEDT"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginStart="25dp"
@@ -50,21 +50,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/editTextText2"
+            android:id="@+id/userEDT"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/background_edittext"
             android:ems="10"
             android:gravity="center_horizontal|center_vertical"
             android:hint="Nombre de usuario"
             android:inputType="text"
-            app:layout_constraintEnd_toEndOf="@+id/editTextText"
-            app:layout_constraintStart_toStartOf="@+id/editTextText"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+            app:layout_constraintEnd_toEndOf="@+id/correoEDT"
+            app:layout_constraintStart_toStartOf="@+id/correoEDT"
+            app:layout_constraintTop_toBottomOf="@+id/correoEDT" />
 
         <EditText
-            android:id="@+id/editTextText3"
+            android:id="@+id/passEDT"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
@@ -73,9 +73,9 @@
             android:gravity="center_horizontal|center_vertical"
             android:hint="Contraseña"
             android:inputType="text"
-            app:layout_constraintEnd_toEndOf="@+id/editTextText"
-            app:layout_constraintStart_toStartOf="@+id/editTextText"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText2" />
+            app:layout_constraintEnd_toEndOf="@+id/userEDT"
+            app:layout_constraintStart_toStartOf="@+id/userEDT"
+            app:layout_constraintTop_toBottomOf="@+id/userEDT" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout6"
@@ -95,11 +95,10 @@
             android:id="@+id/textView26"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:text="Politicas de privacidad"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
-            app:layout_constraintStart_toStartOf="@+id/button2"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
+            app:layout_constraintEnd_toEndOf="@+id/registerBTN"
+            app:layout_constraintStart_toStartOf="@+id/registerBTN"
+            app:layout_constraintTop_toBottomOf="@+id/registerBTN" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

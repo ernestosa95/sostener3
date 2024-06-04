@@ -1,5 +1,9 @@
 package com.example.contener
 
+import com.example.contener.HomePrincipal
+import com.example.contener.MainActivity
+import com.example.contener.R
+import com.example.contener.formularioHome
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Home : AppCompatActivity() {
 
@@ -44,9 +49,28 @@ class Home : AppCompatActivity() {
         val auth = Firebase.auth
         val user = auth.currentUser
 
+        val db = FirebaseFirestore.getInstance()
+        val collectionRef = db.collection("users")
+
+        var userName : String = ""
+        var sex : String = ""
+
         if (user != null) {
-            val userName = user.displayName
-            textView.text = "Hola, " + userName
+
+            if (user.displayName?.isNotEmpty() == true){
+                userName = user.displayName.toString()
+                textView.text = "Hola, " + userName
+            }else{
+                collectionRef.document(user.email.toString()).get().addOnSuccessListener {
+                    // Accede a los datos del usuario
+                    userName = it["names"] as String
+                    textView.text = "Hola, " + userName
+                    if (it["sex"] != null) {
+                        sex = it["sex"] as String
+                    }
+
+                }
+            }
         } else {
             // Handle the case where the user is not signed in
             signOutAndStartSignInActivity()
@@ -56,14 +80,19 @@ class Home : AppCompatActivity() {
         //Epecemos Boton
         val empecemosButton = findViewById<Button>(R.id.empecemosButton)
         empecemosButton.setOnClickListener {
-            if (myPreferences.getString("sex", "unknown").equals("unknown") || myPreferences.getString("p1", "unknown").equals("unknown")) {
-                val intent = Intent(this, formularioHome::class.java)
-                startActivity(intent)
-                finish()
-            }else{
-                val intent = Intent(this, HomePrincipal::class.java)
-                startActivity(intent)
-                finish()
+            if (user != null) {
+                if (myPreferences.getString("sex", "unknown").equals("unknown") || myPreferences.getString("p1", "unknown").equals("unknown") || sex == "") {
+                    val myEditor = myPreferences.edit()
+                    myEditor.putString("names", userName);
+                    myEditor.commit();
+                    val intent = Intent(this, formularioHome::class.java)
+                    startActivity(intent)
+                    finish()
+                }else{
+                    val intent = Intent(this, HomePrincipal::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
 

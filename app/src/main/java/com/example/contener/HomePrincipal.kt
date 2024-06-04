@@ -39,7 +39,7 @@ class HomePrincipal : AppCompatActivity() {
         val perfil = findViewById<ImageView>(R.id.perfilimage)
         val auth = Firebase.auth
         val user = auth.currentUser
-        if (user != null) {
+        if (user != null && user.photoUrl != null) {
             val policy = ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
             val txt = user.photoUrl

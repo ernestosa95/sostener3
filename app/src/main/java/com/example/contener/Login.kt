@@ -3,14 +3,17 @@ package com.example.contener
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.contener.Home
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -22,6 +25,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 enum class ProviderType {
@@ -29,7 +33,6 @@ enum class ProviderType {
 }
 class MainActivity : AppCompatActivity() {
 
-    private val EMAIL = "email"
     companion object {
         private const val RC_SIGN_IN = 9001
     }
@@ -52,8 +55,11 @@ class MainActivity : AppCompatActivity() {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
 
         auth = FirebaseAuth.getInstance()
-
         val currentUser = auth.currentUser
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        preferences.edit().clear().apply()
+
         val iniciaSesion = findViewById<Button>(R.id.IniciaSesion)
         iniciaSesion.setOnClickListener {
             val builder = AlertDialog.Builder(this)
@@ -64,6 +70,15 @@ class MainActivity : AppCompatActivity() {
             //builder.setCancelable(false)
             val dialog = builder.create()
             dialog.show()
+
+            val iniciarBtn = view.findViewById<Button>(R.id.ingresarBTN)
+            val user = view.findViewById<EditText>(R.id.userEDT)
+            val pass = view.findViewById<EditText>(R.id.passEDT)
+            iniciarBtn.setOnClickListener {
+                if (user.text.isNotEmpty() && pass.text.isNotEmpty()){
+                    initMailandPass(user.text.toString() , pass.text.toString())
+                }
+            }
         }
 
         val register = findViewById<Button>(R.id.registrate)
@@ -76,6 +91,16 @@ class MainActivity : AppCompatActivity() {
             //builder.setCancelable(false)
             val dialog = builder.create()
             dialog.show()
+
+            val registerBtn = view.findViewById<Button>(R.id.registerBTN)
+            val correo = view.findViewById<EditText>(R.id.correoEDT)
+            val user = view.findViewById<EditText>(R.id.userEDT)
+            val pass = view.findViewById<EditText>(R.id.passEDT)
+            registerBtn.setOnClickListener {
+                if (user.text.isNotEmpty() && pass.text.isNotEmpty() && correo.text.isNotEmpty()){
+                    registerMailandPass(user.text.toString() , pass.text.toString(), correo.text.toString(), dialog)
+                }
+            }
         }
 
         if (currentUser != null) {
@@ -130,6 +155,7 @@ class MainActivity : AppCompatActivity() {
             })
 
         }
+
     }
 
     private fun signIn() {
@@ -159,11 +185,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
     }
 
-        private fun firebaseAuthWithGoogle(idToken: String) {
+    private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
@@ -176,97 +200,141 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
     }
 
-        /*// Guardado de datos
-        val prefs : SharedPreferences.Editor? = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-        //prefs.putString("email", email)
-        //prefs.putString("provider", provider)
-        //prefs.apply()
+    private fun registerMailandPass(user : String, pass : String, correo: String, dialog: AlertDialog) {
+
+        auth.createUserWithEmailAndPassword(correo, pass)
+            .addOnCompleteListener(this) {
+                if (it.isSuccessful()) {
+                    val myPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+                    val myEditor = myPreferences.edit()
+                    myEditor.putString("names", user);
+                    myEditor.commit();
+
+                    val db = FirebaseFirestore.getInstance()
+                    db.collection("users").document(correo).set(
+                        hashMapOf(
+                            "names" to user
+                        )
+                    )
+
+                    Toast.makeText(this, "register in as ${user}", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                    startActivity(Intent(this, Home:: class.java))
+                    finish()
+                } else {
+                    // Error al crear el usuario
+                    Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
+                } }
+
     }
 
-    private fun setup() {
-
-        title = "autenticacion"
-        val singUpButton = findViewById<Button>(R.id.singUpButton)
-        val emailEditText = findViewById<EditText>(R.id.emailEditText)
-        val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
-        singUpButton.setOnClickListener {
-            if (emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()){
-
-                FirebaseAuth.getInstance()
-                    .createUserWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString())
-                    .addOnCompleteListener{
-                        if (it.isSuccessful){
-                            //showHome(account.email, ProviderType.GOOGLE)
-                        }else{
-                            showAlert()
-                        }
-                    }
-
+    private fun initMailandPass(correo: String, pass : String){
+        auth.signInWithEmailAndPassword(correo, pass)
+            .addOnCompleteListener(this) {
+                if (it.isSuccessful()) {
+                    startActivity(Intent(this, Home:: class.java))
+                    finish()
+                } else {
+                    // Error al crear el usuario
+                    Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
+                }
             }
-        }
-
-        googleButton.setOnClickListener {
-
-            val googleConf : GoogleSignInOptions =
-                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
-                    .requestIdToken(getString(R.string.default_web_client_id))
-                    .requestEmail()
-                    .build()
-            val googleClient : GoogleSignInClient = GoogleSignIn.getClient(this, googleConf)
-            googleClient.signOut()
-
-            startActivityForResult(googleClient.signInIntent, GOOGLE_SING_IN)
-        }
     }
+}
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == GOOGLE_SING_IN){
-            val task : Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
 
-            try {
 
-                val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+/*// Guardado de datos
+val prefs : SharedPreferences.Editor? = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+//prefs.putString("email", email)
+//prefs.putString("provider", provider)
+//prefs.apply()
+}
 
-                val credential: AuthCredential =
-                    GoogleAuthProvider.getCredential(account.idToken, null)
-                FirebaseAuth.getInstance().signInWithCredential(credential)
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            showHome(account.email, ProviderType.GOOGLE)
-                        } else {
-                            showAlert()
-                        }
-                    }
-            }catch (e: ApiException){
-                showAlert()
-                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
-                Log.e("mensaje",e.toString())
+private fun setup() {
+
+title = "autenticacion"
+val singUpButton = findViewById<Button>(R.id.singUpButton)
+val emailEditText = findViewById<EditText>(R.id.emailEditText)
+val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
+singUpButton.setOnClickListener {
+    if (emailEditText.text.isNotEmpty() && passwordEditText.text.isNotEmpty()){
+
+        FirebaseAuth.getInstance()
+            .createUserWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString())
+            .addOnCompleteListener{
+                if (it.isSuccessful){
+                    //showHome(account.email, ProviderType.GOOGLE)
+                }else{
+                    showAlert()
+                }
             }
-        }else{
-            Toast.makeText(this, "ni entro", Toast.LENGTH_SHORT).show()
-        }
-    }
-    private fun showAlert(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Se ha produciodo un error atenticando al usuario")
-        builder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
 
-    private fun showHome(email: String?, google: ProviderType) {
-        val homeIntent = Intent(this, Home::class.java).apply {
-            putExtra("email", "email")
-            putExtra("provider", "provider.name")
-        }
-        startActivity(homeIntent)
     }
+}
+
+googleButton.setOnClickListener {
+
+    val googleConf : GoogleSignInOptions =
+        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+    val googleClient : GoogleSignInClient = GoogleSignIn.getClient(this, googleConf)
+    googleClient.signOut()
+
+    startActivityForResult(googleClient.signInIntent, GOOGLE_SING_IN)
+}
+}
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+super.onActivityResult(requestCode, resultCode, data)
+
+if (requestCode == GOOGLE_SING_IN){
+    val task : Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+
+    try {
+
+        val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+
+        val credential: AuthCredential =
+            GoogleAuthProvider.getCredential(account.idToken, null)
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    showHome(account.email, ProviderType.GOOGLE)
+                } else {
+                    showAlert()
+                }
+            }
+    }catch (e: ApiException){
+        showAlert()
+        Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
+        Log.e("mensaje",e.toString())
+    }
+}else{
+    Toast.makeText(this, "ni entro", Toast.LENGTH_SHORT).show()
+}
+}
+private fun showAlert(){
+val builder = AlertDialog.Builder(this)
+builder.setTitle("Error")
+builder.setMessage("Se ha produciodo un error atenticando al usuario")
+builder.setPositiveButton("Aceptar", null)
+val dialog: AlertDialog = builder.create()
+dialog.show()
+}
+
+private fun showHome(email: String?, google: ProviderType) {
+val homeIntent = Intent(this, Home::class.java).apply {
+    putExtra("email", "email")
+    putExtra("provider", "provider.name")
+}
+startActivity(homeIntent)
+}
 
 }*/
 

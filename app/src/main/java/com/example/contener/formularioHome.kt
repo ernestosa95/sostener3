@@ -19,6 +19,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.example.contener.Home
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,8 +32,6 @@ class formularioHome : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
 
-    private val DB_PATH = "/app/src/main/assets/database/"
-    private val DB_NAME = "data.sqlite"
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +46,7 @@ class formularioHome : AppCompatActivity() {
         val user = auth.currentUser
 
         // Definicion formularios
-        val npText : EditText = findViewById<EditText>(R.id.npET)
+        val npText : EditText = findViewById(R.id.npET)
         val bdDate : TextView = findViewById(R.id.date)
         val sexOptions : Spinner = findViewById<Spinner>(R.id.SPDGralMultipleSelection)
         val siHijos : RadioButton = findViewById(R.id.siHijos)
@@ -109,7 +108,15 @@ class formularioHome : AppCompatActivity() {
 
         //
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        if (preferences.getString("birthdate", "").toString()!=""){bdDate.setText(preferences.getString("birthdate", "").toString())}
+        val auxs : String = "jfhjfhgkdfhgj"
+        npText.setText(auxs)
+        if (preferences.getString("names", "").toString()!=""){
+            npText.setText(preferences.getString("names", "").toString())
+        }
+        Toast.makeText(this, preferences.getString("names", "").toString(), Toast.LENGTH_SHORT).show()
+        if (preferences.getString("birthdate", "").toString()!=""){
+            bdDate.text = preferences.getString("birthdate", "").toString()
+        }
         if (preferences.getString("cantidad_hijos", "").toString()!=""){cantidadHijos.setText(preferences.getString("cantidad_hijos", "").toString())}
         if (preferences.getString("ultimo_hijo", "").toString()!=""){dateLastSon.setText(preferences.getString("ultimo_hijo", "").toString())}
         if (preferences.getString("departamento", "").toString()!=""){deptos.setText(preferences.getString("departamento", "").toString())}
@@ -130,8 +137,10 @@ class formularioHome : AppCompatActivity() {
         }
 
         if (user != null) {
-            npText.setText(user.displayName)
-            names = user.displayName.toString()
+            if (user.displayName!!.length!=0) {
+                npText.setText(user.displayName)
+                names = user.displayName.toString()
+            }
             email = user.email.toString()
             uid = user.uid
 
