@@ -26,6 +26,8 @@ class Home : AppCompatActivity() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var mAuth: FirebaseAuth
 
+    var adminBDData: BDData? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -33,9 +35,14 @@ class Home : AppCompatActivity() {
         getSupportActionBar()?.hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
 
+
         val myPreferences = PreferenceManager.getDefaultSharedPreferences(this@Home)
 
         mAuth = FirebaseAuth.getInstance()
+
+        //Base de datos
+        adminBDData = BDData(baseContext, "BDData", null, 1)
+        val dataUser = adminBDData!!.getDataUser(mAuth.uid)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -45,6 +52,7 @@ class Home : AppCompatActivity() {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val textView = findViewById<TextView>(R.id.binvenidoHome)
+        textView.text = dataUser.get("NAMES")
 
         val auth = Firebase.auth
         val user = auth.currentUser
@@ -55,7 +63,7 @@ class Home : AppCompatActivity() {
         var userName : String = ""
         var sex : String = ""
 
-        if (user != null) {
+        /*if (user != null) {
 
             if (user.displayName?.isNotEmpty() == true){
                 userName = user.displayName.toString()
@@ -75,7 +83,7 @@ class Home : AppCompatActivity() {
             // Handle the case where the user is not signed in
             signOutAndStartSignInActivity()
             Toast.makeText(this, "Debemos pedirte que te vuelvas a loguear", Toast.LENGTH_SHORT).show()
-        }
+        }*/
 
         //Epecemos Boton
         val empecemosButton = findViewById<Button>(R.id.empecemosButton)
@@ -113,5 +121,7 @@ class Home : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         signOutAndStartSignInActivity()
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        preferences.edit().clear().apply()
     }
 }

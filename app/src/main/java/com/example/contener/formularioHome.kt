@@ -137,7 +137,7 @@ class formularioHome : AppCompatActivity() {
         }
 
         if (user != null) {
-            if (user.displayName!!.length!=0) {
+            if (user.displayName!=null) {
                 npText.setText(user.displayName)
                 names = user.displayName.toString()
             }

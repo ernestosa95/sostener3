@@ -1,6 +1,7 @@
 package com.example.contener
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -13,7 +14,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.contener.Home
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -44,6 +44,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var signInFacebook: ConstraintLayout
 
+    var adminBDData: BDData? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // Splash
 
@@ -57,8 +59,9 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        preferences.edit().clear().apply()
+        //Base de datos
+        adminBDData = BDData(baseContext, "BDData", null, 1)
+
 
         val iniciaSesion = findViewById<Button>(R.id.IniciaSesion)
         iniciaSesion.setOnClickListener {
@@ -78,6 +81,11 @@ class MainActivity : AppCompatActivity() {
                 if (user.text.isNotEmpty() && pass.text.isNotEmpty()){
                     initMailandPass(user.text.toString() , pass.text.toString())
                 }
+            }
+
+            val cancel = view.findViewById<ConstraintLayout>(R.id.cancelInit)
+            cancel.setOnClickListener {
+                dialog.dismiss()
             }
         }
 
@@ -100,6 +108,11 @@ class MainActivity : AppCompatActivity() {
                 if (user.text.isNotEmpty() && pass.text.isNotEmpty() && correo.text.isNotEmpty()){
                     registerMailandPass(user.text.toString() , pass.text.toString(), correo.text.toString(), dialog)
                 }
+            }
+
+            val cancel = view.findViewById<ConstraintLayout>(R.id.cancelRegistro)
+            cancel.setOnClickListener {
+                dialog.dismiss()
             }
         }
 
@@ -141,6 +154,18 @@ class MainActivity : AppCompatActivity() {
                         FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
 
                             if (it.isSuccessful){
+
+                                val user = auth.currentUser
+                                val dataUser : ContentValues = ContentValues()
+                                dataUser.put("UID", auth.uid)
+                                dataUser.put("NAMES", user!!.displayName)
+                                dataUser.put("ACTIVE", true)
+                                if (adminBDData!!.existsUser(auth.uid)){
+                                    adminBDData!!.updateDataUser(dataUser)
+                                }else{
+                                    adminBDData!!.setDataUser(dataUser)
+                                }
+
                                 val intent = Intent(this@MainActivity, Home::class.java)
                                 startActivity(intent)
                                 finish()
@@ -193,7 +218,18 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = auth.currentUser
-                    Toast.makeText(this, "Signed in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Bienvenid@ ${user?.displayName}", Toast.LENGTH_SHORT).show()
+
+                    val dataUser : ContentValues = ContentValues()
+                    dataUser.put("UID", auth.uid)
+                    dataUser.put("NAMES", user!!.displayName)
+                    dataUser.put("ACTIVE", true)
+                    if (adminBDData!!.existsUser(auth.uid)){
+                        adminBDData!!.updateDataUser(dataUser)
+                    }else{
+                        adminBDData!!.setDataUser(dataUser)
+                    }
+
                     startActivity(Intent(this, Home:: class.java))
                     finish()
                 } else {
@@ -207,6 +243,23 @@ class MainActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(correo, pass)
             .addOnCompleteListener(this) {
                 if (it.isSuccessful()) {
+
+                    //DB local
+                    //Pregunto si ya existe el usuario
+                    if(adminBDData!!.existsUser(auth.uid)){
+                        //TODO: actualizar usuario
+                        val dataUser : ContentValues = ContentValues()
+                        dataUser.put("NAMES", user)
+                        dataUser.put("UID", auth.uid)
+                        dataUser.put("ACTIVE", true)
+                        adminBDData!!.updateDataUser(dataUser)
+                    }else{
+                        val dataUser : ContentValues = ContentValues()
+                        dataUser.put("NAMES", user)
+                        dataUser.put("UID", auth.uid)
+                        dataUser.put("ACTIVE", true)
+                        adminBDData!!.setDataUser(dataUser)
+                    }
                     val myPreferences = PreferenceManager.getDefaultSharedPreferences(this)
                     val myEditor = myPreferences.edit()
                     myEditor.putString("names", user);
@@ -225,7 +278,26 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 } else {
                     // Error al crear el usuario
-                    Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Ya existe un usuario con este mail, Inicie sesion", Toast.LENGTH_SHORT).show()
+                    //TODO: abrir la ventana de inicio de sesion
+                    dialog.dismiss()
+                    val builder = AlertDialog.Builder(this)
+                    val Inflater = LayoutInflater.from(this)
+                    val view: View = Inflater.inflate(R.layout.init_alert, null)
+                    view.isFocusable = true
+                    builder.setView(view)
+                    //builder.setCancelable(false)
+                    val dialog = builder.create()
+                    dialog.show()
+
+                    val iniciarBtn = view.findViewById<Button>(R.id.ingresarBTN)
+                    val user = view.findViewById<EditText>(R.id.userEDT)
+                    val pass = view.findViewById<EditText>(R.id.passEDT)
+                    iniciarBtn.setOnClickListener {
+                        if (user.text.isNotEmpty() && pass.text.isNotEmpty()){
+                            initMailandPass(user.text.toString() , pass.text.toString())
+                        }
+                    }
                 } }
 
     }
@@ -233,6 +305,10 @@ class MainActivity : AppCompatActivity() {
     private fun initMailandPass(correo: String, pass : String){
         auth.signInWithEmailAndPassword(correo, pass)
             .addOnCompleteListener(this) {
+                val dataUser : ContentValues = ContentValues()
+                dataUser.put("UID", auth.uid)
+                dataUser.put("ACTIVE", true)
+                adminBDData!!.updateDataUser(dataUser)
                 if (it.isSuccessful()) {
                     startActivity(Intent(this, Home:: class.java))
                     finish()
