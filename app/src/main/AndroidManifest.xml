@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Contener"
+        android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
             android:name=".Modulo"
@@ -33,11 +33,11 @@
         <activity
             android:name=".formularioHome"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".Home"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light" />
+            />
         <activity
             android:name=".MainActivity"
             android:exported="true"

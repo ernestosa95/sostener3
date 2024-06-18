@@ -28,13 +28,15 @@ public class BDData extends SQLiteOpenHelper {
             "UID TEXT, " +
             "BIRTHDATE TEXT, " +
             "CHILDRENQUANTITY TEXT, " +
-            "STATE TEXT, PREGNANT TEXT, " +
+            "STATE TEXT, " +
+            "PREGNANT TEXT, " +
             "HAVECHILDRENS TEXT, " +
             "CITY TEXT, " +
             "OHTERCITY TEXT, " +
             "SEX TEXT, " +
             "DATEBORNLASTSON TEXT," +
-            "ACTIVE BOOLEAN)";
+            "ACTIVE BOOLEAN," +
+            "PROVIDER TEXT)";
     //TODO: colocar correctamente los tipos de datos
 
     public BDData(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {

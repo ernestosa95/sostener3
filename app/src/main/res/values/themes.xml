@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Contener" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" >
+        <item name="colorPrimary">#4588BC</item>
+        <item name="colorPrimaryDark">#4588BC</item>
+        <item name="colorAccent">#4588BC</item>
+        <item name="colorControlActivated">#4588BC</item>
+    </style>
+
+    <style name="roundedImage" >
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+
+
 </resources>

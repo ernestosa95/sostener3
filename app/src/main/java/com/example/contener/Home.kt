@@ -1,5 +1,6 @@
 package com.example.contener
 
+import android.content.ContentValues
 import com.example.contener.HomePrincipal
 import com.example.contener.MainActivity
 import com.example.contener.R
@@ -52,7 +53,7 @@ class Home : AppCompatActivity() {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val textView = findViewById<TextView>(R.id.binvenidoHome)
-        textView.text = dataUser.get("NAMES")
+        textView.text = "Hola, "+dataUser.get("NAMES")+"!"
 
         val auth = Firebase.auth
         val user = auth.currentUser
@@ -120,8 +121,16 @@ class Home : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
+
+        val dataUser : ContentValues = ContentValues()
+        dataUser.put("UID", mAuth.uid)
+        dataUser.put("ACTIVE", false)
+        adminBDData!!.updateDataUser(dataUser)
+
         signOutAndStartSignInActivity()
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         preferences.edit().clear().apply()
+
+
     }
 }

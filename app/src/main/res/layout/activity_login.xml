@@ -122,36 +122,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/background_button"
         android:text="Iniciar sesion"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/registrate"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <Button
         android:id="@+id/registrate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/background_button"
         android:text="Registrate"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="@+id/IniciaSesion"
-        app:layout_constraintStart_toStartOf="@+id/IniciaSesion" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="150dp"
-        android:text="¿Olvidaste tu contraseña?"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
-        app:layout_constraintEnd_toEndOf="@+id/registrate"
-        app:layout_constraintStart_toStartOf="@+id/registrate" />
+        app:layout_constraintStart_toStartOf="@+id/IniciaSesion"
+        app:layout_constraintTop_toBottomOf="@+id/IniciaSesion" />
 
     <TextView
         android:id="@+id/textView23"
@@ -161,8 +149,8 @@
         android:text="O continua con"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/googleButton"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2" />
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout4"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout4" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"

@@ -1,6 +1,7 @@
 package com.example.contener
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -31,6 +32,7 @@ import java.io.InputStreamReader
 class formularioHome : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
+    var adminBDData: BDData? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,9 @@ class formularioHome : AppCompatActivity() {
 
         val auth = Firebase.auth
         val user = auth.currentUser
+
+        //Base de datos
+        adminBDData = BDData(baseContext, "BDData", null, 1)
 
         // Definicion formularios
         val npText : EditText = findViewById(R.id.npET)
@@ -107,23 +112,55 @@ class formularioHome : AppCompatActivity() {
         var otraLocalidad : String = ""
 
         //
+        val dataUserCache = adminBDData!!.getDataUser(auth.uid)
+
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val auxs : String = "jfhjfhgkdfhgj"
         npText.setText(auxs)
-        if (preferences.getString("names", "").toString()!=""){
-            npText.setText(preferences.getString("names", "").toString())
+        if (dataUserCache["NAMES"] !=""){
+            npText.setText(dataUserCache["NAMES"])
         }
-        Toast.makeText(this, preferences.getString("names", "").toString(), Toast.LENGTH_SHORT).show()
-        if (preferences.getString("birthdate", "").toString()!=""){
-            bdDate.text = preferences.getString("birthdate", "").toString()
+        //Toast.makeText(this, preferences.getString("names", "").toString(), Toast.LENGTH_SHORT).show()
+        if (dataUserCache["BIRTHDATE"]!=""){
+            bdDate.text = dataUserCache["BIRTHDATE"]
         }
-        if (preferences.getString("cantidad_hijos", "").toString()!=""){cantidadHijos.setText(preferences.getString("cantidad_hijos", "").toString())}
-        if (preferences.getString("ultimo_hijo", "").toString()!=""){dateLastSon.setText(preferences.getString("ultimo_hijo", "").toString())}
-        if (preferences.getString("departamento", "").toString()!=""){deptos.setText(preferences.getString("departamento", "").toString())}
-        if (preferences.getString("localidad", "").toString()!=""){localidades.setText(preferences.getString("localidad", "").toString())}
-
-
-
+        if (dataUserCache["CHILDRENQUANTITY"]!=""){
+            cantidadHijos.setText(dataUserCache["CHILDRENQUANTITY"].toString())
+        }
+        if (dataUserCache["STATE"]!=""){
+            deptos.setText(dataUserCache["STATE"])
+        }
+        if (dataUserCache["CITY"]!=""){
+            localidades.setText(dataUserCache["CITY"])
+        }
+        if (dataUserCache["DATEBORNLASTSON"]!=""){
+            dateLastSon.text = dataUserCache["DATEBORNLASTSON"]
+        }
+        if (dataUserCache["PREGNANT"]!=""){
+            if (dataUserCache["PREGNANT"]=="SI"){
+                siEmbarazo.isChecked = true
+            }else if (dataUserCache["PREGNANT"]=="SI"){
+                noEmbarazo.isChecked = true
+            }else{
+                noloseEmbarazo.isChecked = true
+            }
+        }
+        if (dataUserCache["HAVECHILDRENS"]!=""){
+            if (dataUserCache["HAVECHILDRENS"]=="SI"){
+                siHijos.isChecked = true
+            }else{
+                noHijos.isChecked = true
+            }
+        }
+        if (dataUserCache["SEX"]!=""){
+            if (dataUserCache["SEX"]=="FEMENINO"){
+                sexOptions.setSelection(1)
+            }else if (dataUserCache["SEX"]=="MASCULINO"){
+                sexOptions.setSelection(2)
+            }else{
+                sexOptions.setSelection(3)
+            }
+        }
 
         siHijos.setOnClickListener {
             cantidadHijos.setEnabled(true)
@@ -244,6 +281,21 @@ class formularioHome : AppCompatActivity() {
                                         "otraLocalidad" to otraLocalidad
                                     )
                                 )
+
+                                val dataUser : ContentValues = ContentValues()
+                                dataUser.put("NAMES", names)
+                                dataUser.put("UID", uid)
+                                dataUser.put("BIRTHDATE", birthdate)
+                                dataUser.put("CHILDRENQUANTITY", canHijos)
+                                dataUser.put("STATE", deptos.text.toString())
+                                dataUser.put("PREGNANT", embarazo)
+                                dataUser.put("HAVECHILDRENS", hijos)
+                                dataUser.put("CITY", localidades.text.toString())
+                                dataUser.put("OHTERCITY", "")
+                                dataUser.put("SEX", sex)
+                                dataUser.put("DATEBORNLASTSON", fechaUltimoNacimiento)
+                                adminBDData!!.updateDataUser(dataUser)
+
 
                                 val myPreferences = PreferenceManager.getDefaultSharedPreferences(this@formularioHome)
                                 val myEditor = myPreferences.edit()

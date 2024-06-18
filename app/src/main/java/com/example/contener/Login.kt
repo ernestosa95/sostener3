@@ -159,6 +159,7 @@ class MainActivity : AppCompatActivity() {
                                 val dataUser : ContentValues = ContentValues()
                                 dataUser.put("UID", auth.uid)
                                 dataUser.put("NAMES", user!!.displayName)
+                                dataUser.put("PROVIDER", "FACEBOOK")
                                 dataUser.put("ACTIVE", true)
                                 if (adminBDData!!.existsUser(auth.uid)){
                                     adminBDData!!.updateDataUser(dataUser)
@@ -223,6 +224,7 @@ class MainActivity : AppCompatActivity() {
                     val dataUser : ContentValues = ContentValues()
                     dataUser.put("UID", auth.uid)
                     dataUser.put("NAMES", user!!.displayName)
+                    dataUser.put("PROVIDER", "GOOGLE")
                     dataUser.put("ACTIVE", true)
                     if (adminBDData!!.existsUser(auth.uid)){
                         adminBDData!!.updateDataUser(dataUser)
@@ -247,16 +249,17 @@ class MainActivity : AppCompatActivity() {
                     //DB local
                     //Pregunto si ya existe el usuario
                     if(adminBDData!!.existsUser(auth.uid)){
-                        //TODO: actualizar usuario
                         val dataUser : ContentValues = ContentValues()
                         dataUser.put("NAMES", user)
                         dataUser.put("UID", auth.uid)
+                        dataUser.put("PROVIDER", "USER")
                         dataUser.put("ACTIVE", true)
                         adminBDData!!.updateDataUser(dataUser)
                     }else{
                         val dataUser : ContentValues = ContentValues()
                         dataUser.put("NAMES", user)
                         dataUser.put("UID", auth.uid)
+                        dataUser.put("PROVIDER", "USER")
                         dataUser.put("ACTIVE", true)
                         adminBDData!!.setDataUser(dataUser)
                     }

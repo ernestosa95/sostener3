@@ -1,8 +1,10 @@
 package com.example.contener
 
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import android.webkit.WebView
 import android.widget.MediaController
 import android.widget.VideoView
@@ -24,7 +26,30 @@ class Modulo : AppCompatActivity() {
         val path = Uri.parse("android.resource://com.example.contener/"+R.raw.videoejemplo)
         videoview.setMediaController(media)
         videoview.setVideoURI(path)
-        videoview.start()
+        //videoview.start()
 
+        videoview.setOnClickListener {
+            toggleFullscreen()
+        }
+    }
+
+    private fun toggleFullscreen() {
+        val isFullscreen = window.attributes.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN != 0
+
+        if (isFullscreen) {
+            exitFullscreen()
+        } else {
+            enterFullscreen()
+        }
+    }
+
+    private fun enterFullscreen() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+    }
+
+    private fun exitFullscreen() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
 }
