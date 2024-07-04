@@ -2,10 +2,10 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" >
-        <item name="colorPrimary">#4588BC</item>
-        <item name="colorPrimaryDark">#4588BC</item>
-        <item name="colorAccent">#4588BC</item>
-        <item name="colorControlActivated">#4588BC</item>
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimaryDark">#FFFFFF</item>
+        <item name="colorAccent">#FFFFFF</item>
+        <item name="colorControlActivated">#FFFFFF</item>
     </style>
 
     <style name="roundedImage" >

@@ -60,8 +60,15 @@ class HomePrincipal : AppCompatActivity() {
         webView.loadData(video, "text/html", "utf-8")
         webView.settings.javaScriptEnabled = true
 
+        val btnMaternidad : Button = findViewById(R.id.MATERNIDADBTN)
+        btnMaternidad.setOnClickListener {
+            val intent = Intent(this, Modulo::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         // Ver todos
-        val verTodos : TextView = findViewById(R.id.verTodos)
+        /*val verTodos : TextView = findViewById(R.id.verTodos)
         verTodos.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             val Inflater = LayoutInflater.from(this)
@@ -83,10 +90,10 @@ class HomePrincipal : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-        }
+        }*/
 
         //Opciones de configuracion
-        val configuraciones : ImageView = findViewById(R.id.configuration)
+        /*val configuraciones : ImageView = findViewById(R.id.configuration)
         configuraciones.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             val Inflater = LayoutInflater.from(this)
@@ -103,7 +110,7 @@ class HomePrincipal : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-        }
+        }*/
 
     }
 
