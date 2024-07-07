@@ -19,9 +19,12 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".video_landscape_reproductor"
+            android:exported="false" />
+        <activity
             android:name=".Modulo"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light"/>
+            android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".HomePrincipal"
             android:exported="false"
@@ -33,11 +36,10 @@
         <activity
             android:name=".formularioHome"
             android:exported="false"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Home"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

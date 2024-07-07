@@ -312,7 +312,7 @@ class formularioHome : AppCompatActivity() {
                                 myEditor.putString("otralocalidad", otraLocalidad);
                                 myEditor.commit();
 
-                                val intent = Intent(this, interesesHome::class.java)
+                                val intent = Intent(this, HomePrincipal::class.java)
                                 startActivity(intent)
                                 finish()
                             }else{Toast.makeText(this, "Indique situacion de embarazo", Toast.LENGTH_SHORT).show()}

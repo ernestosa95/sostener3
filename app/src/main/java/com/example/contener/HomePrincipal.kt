@@ -63,54 +63,10 @@ class HomePrincipal : AppCompatActivity() {
         val btnMaternidad : Button = findViewById(R.id.MATERNIDADBTN)
         btnMaternidad.setOnClickListener {
             val intent = Intent(this, Modulo::class.java)
+            intent.putExtra("modulo", "Maternidad")
             startActivity(intent)
             finish()
         }
-
-        // Ver todos
-        /*val verTodos : TextView = findViewById(R.id.verTodos)
-        verTodos.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            val Inflater = LayoutInflater.from(this)
-            val view: View = Inflater.inflate(R.layout.basic_alert, null)
-            view.isFocusable = true
-            builder.setView(view)
-            //builder.setCancelable(false)
-            val dialog = builder.create()
-            dialog.show()
-
-            val volver = view.findViewById<ImageView>(R.id.volverArrow)
-            volver.setOnClickListener { dialog.dismiss() }
-            val volverTxt = view.findViewById<TextView>(R.id.volverTxt)
-            volverTxt.setOnClickListener { dialog.dismiss() }
-
-            val ejemploModulo = view.findViewById<ConstraintLayout>(R.id.ejemploModulo)
-            ejemploModulo.setOnClickListener {
-                val intent = Intent(this, Modulo::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }*/
-
-        //Opciones de configuracion
-        /*val configuraciones : ImageView = findViewById(R.id.configuration)
-        configuraciones.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            val Inflater = LayoutInflater.from(this)
-            val view: View = Inflater.inflate(R.layout.config_alert, null)
-            view.isFocusable = true
-            builder.setView(view)
-            //builder.setCancelable(false)
-            val dialog = builder.create()
-            dialog.show()
-
-            val datosPersonales = view.findViewById<ConstraintLayout>(R.id.datosPersonales)
-            datosPersonales.setOnClickListener {
-                val intent = Intent(this, formularioHome::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }*/
 
     }
 
