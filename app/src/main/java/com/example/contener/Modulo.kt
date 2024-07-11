@@ -3,8 +3,11 @@ package com.example.contener
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -31,36 +34,29 @@ class Modulo : AppCompatActivity() {
 
         var videoA : ConstraintLayout = findViewById(R.id.video1)
         videoA.setOnClickListener {
-            /*val builder = AlertDialog.Builder(this)
-            val Inflater = LayoutInflater.from(this)
-            val view: View = Inflater.inflate(R.layout.basic_alert_video, null)
-            view.isFocusable = true
-            builder.setView(view)
-            builder.setCancelable(false)
-            val dialog = builder.create()
-            dialog.show()
-
-            val videoview : VideoView = view.findViewById(R.id.videoAlert)
-            val media : MediaController = MediaController(this)
-            media.setAnchorView(videoview)
-
-            val path = Uri.parse("android.resource://com.example.contener/"+R.raw.videoejemplo)
-            videoview.setMediaController(media)
-            videoview.setVideoURI(path)
-            //videoview.rotation = 90F
-            videoview.start()
-
-            videoview.setOnClickListener {
-                //toggleFullscreen()
-            }*/
-
-
-
-
             val intent = Intent(this, video_landscape_reproductor::class.java)
             intent.putExtra("modulo", modulo.toString())
             startActivity(intent)
             finish()
+        }
+
+        val audio : ConstraintLayout = findViewById(R.id.audioCL)
+        val mediaPlayerAudio = MediaPlayer.create(this, R.raw.audio) // Reproducir audio desde la carpeta raw
+        val imageAudio : ImageView = findViewById(R.id.imageAudio)
+        //val filePath = Uri.parse("android.resource://com.example.contener/"+R.raw.audio)
+        //val mediaPlayerAudio = MediaPlayer.create(this, filePath)
+        var status = "p"
+        audio.setOnClickListener {
+            if (status=="p"){
+                mediaPlayerAudio.start()
+                status="s"
+                imageAudio.setImageResource(android.R.drawable.ic_media_pause)
+
+            }else{
+                mediaPlayerAudio.pause()
+                status="p"
+                imageAudio.setImageResource(android.R.drawable.ic_media_play)
+            }
         }
     }
 
