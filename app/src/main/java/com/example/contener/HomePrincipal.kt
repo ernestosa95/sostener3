@@ -34,7 +34,7 @@ class HomePrincipal : AppCompatActivity() {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
 
         val myPreferences = PreferenceManager.getDefaultSharedPreferences(this@HomePrincipal)
-        Toast.makeText(this, myPreferences.getString("p1", "unknown"), Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, myPreferences.getString("p1", "unknown"), Toast.LENGTH_SHORT).show()
 
         val perfil = findViewById<ImageView>(R.id.perfilimage)
         val auth = Firebase.auth
@@ -68,7 +68,43 @@ class HomePrincipal : AppCompatActivity() {
             finish()
         }
 
+        val btnPosparto : Button = findViewById(R.id.POSPARTOBTN)
+        btnPosparto.setOnClickListener {
+            val intent = Intent(this, Modulo::class.java)
+            intent.putExtra("modulo", "Posparto")
+            startActivity(intent)
+            finish()
+        }
+
+        val btnParto : Button = findViewById(R.id.PARTOBTN)
+        btnParto.setOnClickListener {
+            val intent = Intent(this, Modulo::class.java)
+            intent.putExtra("modulo", "Parto")
+            startActivity(intent)
+            finish()
+        }
+
+        val btnEmbarazo : Button = findViewById(R.id.EMBARAZOBTN)
+        btnEmbarazo.setOnClickListener {
+            val intent = Intent(this, Modulo::class.java)
+            intent.putExtra("modulo", "Embarazo")
+            startActivity(intent)
+            finish()
+        }
+
+        val editData = findViewById<TextView>(R.id.editTXT)
+        editData.setOnClickListener {
+            val intent = Intent(this, formularioHome::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, Home::class.java)
+        startActivity(intent)
+        finish()
+    }
 }

@@ -296,22 +296,6 @@ class formularioHome : AppCompatActivity() {
                                 dataUser.put("DATEBORNLASTSON", fechaUltimoNacimiento)
                                 adminBDData!!.updateDataUser(dataUser)
 
-
-                                val myPreferences = PreferenceManager.getDefaultSharedPreferences(this@formularioHome)
-                                val myEditor = myPreferences.edit()
-                                myEditor.putString("uid", uid);
-                                myEditor.putString("names", names);
-                                myEditor.putString("birthdate", birthdate);
-                                myEditor.putString("sex", sex);
-                                myEditor.putString("hijos", hijos);
-                                myEditor.putString("cantidad_hijos", canHijos);
-                                myEditor.putString("ultimo_hijo", fechaUltimoNacimiento);
-                                myEditor.putString("embarazo", embarazo);
-                                myEditor.putString("departamento", deptos.text.toString());
-                                myEditor.putString("localidad", localidades.text.toString());
-                                myEditor.putString("otralocalidad", otraLocalidad);
-                                myEditor.commit();
-
                                 val intent = Intent(this, HomePrincipal::class.java)
                                 startActivity(intent)
                                 finish()

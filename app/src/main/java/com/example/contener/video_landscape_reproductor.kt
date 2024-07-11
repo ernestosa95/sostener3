@@ -26,7 +26,7 @@ class video_landscape_reproductor : AppCompatActivity() {
             val media : MediaController = MediaController(this)
             media.setAnchorView(videoview)
 
-            val path = Uri.parse("android.resource://com.example.contener/"+R.raw.videosostener1)
+            val path = Uri.parse("android.resource://com.example.contener/"+R.raw.video)
             videoview.setMediaController(media)
             videoview.setVideoURI(path)
             videoview.start()

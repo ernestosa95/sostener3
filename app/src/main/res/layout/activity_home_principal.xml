@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/perfilimage">
+        app:layout_constraintTop_toBottomOf="@+id/editTXT">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -171,7 +171,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/POSPARTOBTN"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:background="@drawable/background_button_degradado"
@@ -241,7 +241,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/PARTOBTN"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:background="@drawable/background_button_degradado"
@@ -310,7 +310,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/EMBARAZOBTN"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:background="@drawable/background_button_degradado"
@@ -356,8 +356,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/perfilimage"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="35dp"
         android:background="@color/background1"
@@ -400,5 +400,18 @@
         app:layout_constraintStart_toStartOf="parent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/editTXT"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
+        android:text="Editar datos personales"
+        android:textColor="#FFFFFF"
+        android:textSize="9sp"
+        app:layout_constraintEnd_toEndOf="@+id/perfilimage"
+        app:layout_constraintStart_toStartOf="@+id/perfilimage"
+        app:layout_constraintTop_toBottomOf="@+id/perfilimage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

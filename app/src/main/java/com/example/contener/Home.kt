@@ -64,36 +64,16 @@ class Home : AppCompatActivity() {
         var userName : String = ""
         var sex : String = ""
 
-        /*if (user != null) {
-
-            if (user.displayName?.isNotEmpty() == true){
-                userName = user.displayName.toString()
-                textView.text = "Hola, " + userName
-            }else{
-                collectionRef.document(user.email.toString()).get().addOnSuccessListener {
-                    // Accede a los datos del usuario
-                    userName = it["names"] as String
-                    textView.text = "Hola, " + userName
-                    if (it["sex"] != null) {
-                        sex = it["sex"] as String
-                    }
-
-                }
-            }
-        } else {
-            // Handle the case where the user is not signed in
-            signOutAndStartSignInActivity()
-            Toast.makeText(this, "Debemos pedirte que te vuelvas a loguear", Toast.LENGTH_SHORT).show()
-        }*/
-
         //Epecemos Boton
         val empecemosButton = findViewById<Button>(R.id.empecemosButton)
         empecemosButton.setOnClickListener {
             if (user != null) {
-                if (myPreferences.getString("sex", "unknown").equals("unknown") || myPreferences.getString("p1", "unknown").equals("unknown") || sex == "") {
-                    val myEditor = myPreferences.edit()
-                    myEditor.putString("names", userName);
-                    myEditor.commit();
+                //Toast.makeText(this, adminBDData!!.getDataUser(user.uid)["BIRTHDATE"] + "666", Toast.LENGTH_SHORT ).show()
+                if (adminBDData!!.getDataUser(user.uid)["BIRTHDATE"]?.length == 0 || adminBDData!!.getDataUser(user.uid)["BIRTHDATE"].isNullOrBlank()){
+                //if (myPreferences.getString("sex", "unknown").equals("unknown") || myPreferences.getString("p1", "unknown").equals("unknown") || sex == "") {
+                    //val myEditor = myPreferences.edit()
+                    //myEditor.putString("names", userName);
+                    //myEditor.commit();
                     val intent = Intent(this, formularioHome::class.java)
                     startActivity(intent)
                     finish()

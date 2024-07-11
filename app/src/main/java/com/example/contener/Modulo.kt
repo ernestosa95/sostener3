@@ -1,25 +1,25 @@
 package com.example.contener
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.view.WindowManager
-import android.webkit.WebView
-import android.widget.MediaController
 import android.widget.TextView
-import android.widget.VideoView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import kotlinx.coroutines.delay
 
 class Modulo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modulo)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
+        // Evitar la rotacion
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        }
 
         getSupportActionBar()?.hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
@@ -82,5 +82,12 @@ class Modulo : AppCompatActivity() {
     private fun exitFullscreen() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, HomePrincipal::class.java)
+        startActivity(intent)
+        finish()
     }
 }

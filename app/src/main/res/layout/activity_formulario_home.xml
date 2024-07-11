@@ -42,8 +42,8 @@
                     android:gravity="center_horizontal|center_vertical"
                     android:hint="Nombre y apellido"
                     android:inputType="text"
-                    android:textColor="#000000"
-                    android:textColorHint="#000000"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -93,6 +93,7 @@
                     android:background="@drawable/background_button"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="DD/MM/AAAA"
+                    android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -153,6 +154,8 @@
                     android:gravity="center_horizontal|center_vertical"
                     android:hint="¿Cuantos?"
                     android:inputType="number"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="@+id/radioGroup2"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -166,6 +169,7 @@
                     android:foregroundGravity="center_vertical|center_horizontal"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="DD/MM/AAAA"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="@+id/textView9"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView9"
@@ -177,6 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:text="El ultimo nacio el:"
+                    android:textColor="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/radioGroup2" />
 
@@ -210,13 +215,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="50dp"
-                        android:text="Si" />
+                        android:text="Si"
+                        android:textColor="#FFFFFF" />
 
                     <RadioButton
                         android:id="@+id/noHijos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="No" />
+                        android:text="No"
+                        android:textColor="#FFFFFF" />
                 </RadioGroup>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -287,7 +294,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="75dp"
                 android:background="@drawable/background_button_degradado">
 
                 <AutoCompleteTextView
@@ -299,6 +306,7 @@
                     android:background="@drawable/background_edittext"
                     android:gravity="center_horizontal|center_vertical"
                     android:hint="Localidad"
+                    android:textColor="#FFFFFF"
                     android:textColorHint="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/autoDeptos"
@@ -315,6 +323,7 @@
                     android:background="@drawable/background_edittext"
                     android:gravity="center_horizontal|center_vertical"
                     android:hint="Departamento"
+                    android:textColor="#FFFFFF"
                     android:textColorHint="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
