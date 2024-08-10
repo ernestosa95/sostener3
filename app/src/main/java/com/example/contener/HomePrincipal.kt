@@ -3,11 +3,13 @@ package com.example.contener
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import java.lang.Exception
 import java.net.URL
 
 
@@ -97,6 +100,21 @@ class HomePrincipal : AppCompatActivity() {
             val intent = Intent(this, formularioHome::class.java)
             startActivity(intent)
             finish()
+        }
+
+        val mapsView = findViewById<Button>(R.id.mapsView)
+        mapsView.setOnClickListener {
+            // Crear un Intent para abrir Google Maps con la búsqueda predefinida
+            val gmmIntentUri = Uri.parse("geo:0,0?q=centros+de+salud")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+
+            try {
+                startActivity(mapIntent)
+            }catch (e : Exception){
+                Log.e("error", e.toString() + " e")
+                Toast.makeText(this, "No pudimos localizar centros de salud cercanos", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
