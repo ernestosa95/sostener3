@@ -2,10 +2,12 @@ package com.example.contener
 
 import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -115,16 +117,16 @@ class formularioHome : AppCompatActivity() {
         val dataUserCache = adminBDData!!.getDataUser(auth.uid)
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val auxs : String = "jfhjfhgkdfhgj"
+        val auxs : String = "Nombre y Apellido"
         npText.setText(auxs)
         if (dataUserCache["NAMES"] !=""){
             npText.setText(dataUserCache["NAMES"])
         }
         //Toast.makeText(this, preferences.getString("names", "").toString(), Toast.LENGTH_SHORT).show()
-        if (dataUserCache["BIRTHDATE"]!=""){
+        if (dataUserCache["BIRTHDATE"]!="" && dataUserCache["BIRTHDATE"]!=null){
             bdDate.text = dataUserCache["BIRTHDATE"]
         }
-        if (dataUserCache["CHILDRENQUANTITY"]!=""){
+        if (dataUserCache["CHILDRENQUANTITY"]!="" && dataUserCache["CHILDRENQUANTITY"]!=null){
             cantidadHijos.setText(dataUserCache["CHILDRENQUANTITY"].toString())
         }
         if (dataUserCache["STATE"]!=""){
@@ -261,7 +263,7 @@ class formularioHome : AppCompatActivity() {
 
             if (siEmbarazo.isChecked){embarazo = "SI"}else if (noEmbarazo.isChecked){embarazo = "NO"}else if (noloseEmbarazo.isChecked){embarazo = "NO LO SE"}
 
-            if (birthdate!="DD/MM/AAAA"){
+            if (birthdate!="DD/MM/AAAA" && birthdate.length!=0){
                 if (sexOptions.selectedItem.toString() != "- seleccionar -") {
                     if (!hijos.equals("")) {
                         if (hijos == "SI" && canHijos != "0" && fechaUltimoNacimiento != "DD/MM/AAAA" || hijos == "NO") {
@@ -280,7 +282,17 @@ class formularioHome : AppCompatActivity() {
                                         "localidad" to localidades.text.toString(),
                                         "otraLocalidad" to otraLocalidad
                                     )
-                                )
+                                ).addOnSuccessListener { documentReference ->
+                                    Log.d(TAG, "DocumentSnapshot added with ID:${documentReference}")
+                                    // Aquí puedes mostrar un mensaje de éxito al usuario
+                                    Toast.makeText(this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
+                                }
+                                    .addOnFailureListener { e ->
+                                        Log.w(TAG, "Error adding document", e)
+                                        // Aquí puedes mostrar un mensaje de error al usuario
+                                        Toast.makeText(this, "Error al guardar los datos", Toast.LENGTH_SHORT).show()
+                                    }
+
 
                                 val dataUser : ContentValues = ContentValues()
                                 dataUser.put("NAMES", names)
@@ -307,7 +319,6 @@ class formularioHome : AppCompatActivity() {
                     }else{Toast.makeText(this, "Debe indicar si tiene hijos", Toast.LENGTH_SHORT).show()}
                 }else{Toast.makeText(this, "Seleccione el sexo", Toast.LENGTH_SHORT).show()}
             }else{Toast.makeText(this, "Falta la fecha de nacimiento", Toast.LENGTH_SHORT).show()}
-
         }
     }
 

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,8 +23,10 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -80,6 +83,23 @@ class MainActivity : AppCompatActivity() {
             iniciarBtn.setOnClickListener {
                 if (user.text.isNotEmpty() && pass.text.isNotEmpty()){
                     initMailandPass(user.text.toString() , pass.text.toString())
+                }
+            }
+
+            //Reset pssw
+            val reset = view.findViewById<TextView>(R.id.resetPssw)
+            reset.setOnClickListener {
+                pass.visibility = View.GONE
+                reset.visibility = View.GONE
+                iniciarBtn.text = "Resetear contraseña"
+                Toast.makeText(this, "Debe ingresar su correo electrónico", Toast.LENGTH_SHORT).show()
+
+                iniciarBtn.setOnClickListener {
+                    if (user.text.isNotEmpty()) {
+                        resetPassword(user.text.toString(), dialog)
+                    }else{
+                        Toast.makeText(this, "Ingrese su email", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
@@ -182,7 +202,38 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
+
     }
+
+    fun resetPassword(email: String, dialog: AlertDialog ) {
+
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful)
+                {
+                    // Se envió el correo electrónico de restablecimiento de contraseña
+                    println("Se envió un correo electrónico de restablecimiento a $email")
+                    Toast.makeText(this, "Se envió un correo electrónico de restablecimiento a $email", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                } else {
+                    val exception = task.exception
+                    when (exception) {
+                        is FirebaseAuthInvalidCredentialsException -> {
+                            // La dirección de correo electrónico no está formateada correctamente
+                            println("Dirección de correo electrónico no válida.")
+                        }
+                        else -> {
+                            // Otro error
+                            println("Error al enviar el correo electrónico de restablecimiento: ${exception?.message}")
+                        }
+                    }
+                }
+            }
+    }
+
+
+
 
     private fun signIn() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -306,20 +357,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initMailandPass(correo: String, pass : String){
+
         auth.signInWithEmailAndPassword(correo, pass)
-            .addOnCompleteListener(this) {
-                val dataUser : ContentValues = ContentValues()
-                dataUser.put("UID", auth.uid)
-                dataUser.put("ACTIVE", true)
-                adminBDData!!.updateDataUser(dataUser)
-                if (it.isSuccessful()) {
-                    startActivity(Intent(this, Home:: class.java))
-                    finish()
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val dataUser = ContentValues()
+                    dataUser.put("UID", auth.uid)
+                    dataUser.put("ACTIVE", true)
+                    adminBDData!!.updateDataUser(dataUser)
+                    startActivity(Intent(this, Home::class.java))
                 } else {
-                    // Error al crear el usuario
-                    Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
+                    // Handle login failure
+                    val exception = task.exception
+                    if (exception != null) {
+                        val errorMessage = exception.localizedMessage ?: "Authentication failed."
+                        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                    } else {
+                        // This shouldn't happen, but handle unexpected errors
+                        Toast.makeText(this, "An unknown error occurred.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
+
     }
 }
 

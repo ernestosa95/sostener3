@@ -102,8 +102,14 @@ class HomePrincipal : AppCompatActivity() {
             finish()
         }
 
-        val mapsView = findViewById<Button>(R.id.mapsView)
+        /*val mapsView = findViewById<Button>(R.id.mapsView)
         mapsView.setOnClickListener {
+
+            //https://www.google.com/maps/d/edit?mid=1pZZDnvrZIT2iNzL1qvwJpTzehRkEPeo&usp=sharing
+            var url = "https://www.google.com/maps/d/edit?mid=1pZZDnvrZIT2iNzL1qvwJpTzehRkEPeo&usp=sharing"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            this.startActivity(intent)
+
             // Crear un Intent para abrir Google Maps con la búsqueda predefinida
             val gmmIntentUri = Uri.parse("geo:0,0?q=centros+de+salud")
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
@@ -115,8 +121,34 @@ class HomePrincipal : AppCompatActivity() {
                 Log.e("error", e.toString() + " e")
                 Toast.makeText(this, "No pudimos localizar centros de salud cercanos", Toast.LENGTH_SHORT).show()
             }
-        }
+        }*/
 
+        val options = findViewById<ImageView>(R.id.optionsBTN)
+        options.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val Inflater = LayoutInflater.from(this)
+            val view: View = Inflater.inflate(R.layout.basic_alert, null)
+            view.isFocusable = true
+            builder.setView(view)
+            //builder.setCancelable(false)
+            val dialog = builder.create()
+            dialog.show()
+
+            val mapa = view.findViewById<ConstraintLayout>(R.id.EfectoresCercanosBTN)
+            mapa.setOnClickListener {
+                var url = "https://www.google.com/maps/d/edit?mid=1pZZDnvrZIT2iNzL1qvwJpTzehRkEPeo&usp=sharing"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                this.startActivity(intent)
+            }
+
+            val data_personal = view.findViewById<ConstraintLayout>(R.id.DatosPersonalesBTN)
+            data_personal.setOnClickListener {
+                val intent = Intent(this, formularioHome::class.java)
+                startActivity(intent)
+                dialog.dismiss()
+                finish()
+            }
+        }
     }
 
     override fun onBackPressed() {

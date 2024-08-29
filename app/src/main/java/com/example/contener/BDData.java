@@ -64,8 +64,10 @@ public class BDData extends SQLiteOpenHelper {
     public void updateDataUser(ContentValues dataUser){
         SQLiteDatabase db = this.getWritableDatabase();
         //db.insert("USERS", null, dataUser);
+        if(dataUser.get("UID").toString().length()!=0 && dataUser.get("UID")!=null){
         String[] args = new String[]{dataUser.get("UID").toString()};
         db.update("USERS", dataUser, "UID=?", args);
+        }
         db.close();
     }
 
