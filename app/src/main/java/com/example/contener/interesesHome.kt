@@ -1,6 +1,8 @@
 package com.example.contener
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -28,6 +30,11 @@ class interesesHome : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intereses_home)
+
+        // Evitar la rotacion
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        }
 
         getSupportActionBar()?.hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen

@@ -6,6 +6,8 @@ import com.example.contener.MainActivity
 import com.example.contener.R
 import com.example.contener.formularioHome
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -36,6 +38,11 @@ class Home : AppCompatActivity() {
         getSupportActionBar()?.hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
 
+
+        // Evitar la rotacion
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        }
 
         val myPreferences = PreferenceManager.getDefaultSharedPreferences(this@Home)
 

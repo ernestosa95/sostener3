@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -45,6 +47,11 @@ class formularioHome : AppCompatActivity() {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
 
         // pellenado del formulario
+
+        // Evitar la rotacion
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        }
 
         val auth = Firebase.auth
         val user = auth.currentUser

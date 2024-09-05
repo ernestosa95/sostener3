@@ -3,6 +3,8 @@ package com.example.contener
 import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -64,6 +66,11 @@ class MainActivity : AppCompatActivity() {
 
         //Base de datos
         adminBDData = BDData(baseContext, "BDData", null, 1)
+
+        // Evitar la rotacion
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        }
 
 
         val iniciaSesion = findViewById<Button>(R.id.IniciaSesion)

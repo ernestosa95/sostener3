@@ -1,7 +1,10 @@
 package com.example.contener
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
@@ -21,13 +24,21 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import java.lang.Exception
 import java.net.URL
 
 
 class HomePrincipal : AppCompatActivity() {
+
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var auth: FirebaseAuth
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +50,13 @@ class HomePrincipal : AppCompatActivity() {
         val myPreferences = PreferenceManager.getDefaultSharedPreferences(this@HomePrincipal)
         //Toast.makeText(this, myPreferences.getString("p1", "unknown"), Toast.LENGTH_SHORT).show()
 
+        // Evitar la rotacion
+        if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+        }
+
         val perfil = findViewById<ImageView>(R.id.perfilimage)
-        val auth = Firebase.auth
+        auth = Firebase.auth
         val user = auth.currentUser
         if (user != null && user.photoUrl != null) {
             val policy = ThreadPolicy.Builder().permitAll().build()
@@ -50,6 +66,13 @@ class HomePrincipal : AppCompatActivity() {
             val mIcon_val = BitmapFactory.decodeStream(newurl.openConnection().getInputStream())
             perfil.setImageBitmap(mIcon_val)
         }
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val formButton = findViewById<Button>(R.id.formButton)
         formButton.setOnClickListener {
@@ -148,6 +171,32 @@ class HomePrincipal : AppCompatActivity() {
                 dialog.dismiss()
                 finish()
             }
+
+            val closesesion = view.findViewById<ConstraintLayout>(R.id.CerrarSesionBTN)
+            closesesion.setOnClickListener {
+
+                val dataUser : ContentValues = ContentValues()
+                dataUser.put("UID", auth.uid)
+                dataUser.put("ACTIVE", false)
+                var adminBDData: BDData? = null
+                //Base de datos
+                adminBDData = BDData(baseContext, "BDData", null, 1)
+                adminBDData!!.updateDataUser(dataUser)
+
+                signOutAndStartSignInActivity()
+
+            }
+        }
+    }
+
+    private fun signOutAndStartSignInActivity() {
+        auth.signOut()
+
+        mGoogleSignInClient.signOut().addOnCompleteListener(this) {
+            // Optional: Update UI or show a message to the user
+            val intent = Intent(this@HomePrincipal, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 

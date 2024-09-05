@@ -12,6 +12,8 @@ import android.widget.VideoView
 import androidx.constraintlayout.widget.ConstraintLayout
 
 class video_landscape_reproductor : AppCompatActivity() {
+
+    var modulo = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_landscape_reproductor)
@@ -19,7 +21,7 @@ class video_landscape_reproductor : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         getSupportActionBar()?.hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-        var modulo = intent.getStringExtra("modulo")
+        modulo = intent.getStringExtra("modulo").toString()
 
         val videoview : VideoView = findViewById(R.id.videoView2)
             videoview.visibility = View.VISIBLE
@@ -43,5 +45,13 @@ class video_landscape_reproductor : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, Modulo::class.java)
+        intent.putExtra("modulo", modulo.toString())
+        startActivity(intent)
+        finish()
     }
 }
