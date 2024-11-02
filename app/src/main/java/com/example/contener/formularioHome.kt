@@ -296,7 +296,8 @@ class formularioHome : AppCompatActivity() {
                                         "embarazo" to embarazo,
                                         "departamento" to deptos.text.toString(),
                                         "localidad" to localidades.text.toString(),
-                                        "otraLocalidad" to otraLocalidad
+                                        "otraLocalidad" to otraLocalidad,
+                                        "TERM" to "acepto"
                                     )
                                 ).addOnSuccessListener { documentReference ->
                                     Log.d(TAG, "DocumentSnapshot added with ID:${documentReference}")

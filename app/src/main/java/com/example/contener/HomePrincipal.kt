@@ -12,26 +12,23 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import java.lang.Exception
 import java.net.URL
 
 
@@ -194,6 +191,28 @@ class HomePrincipal : AppCompatActivity() {
                 signOutAndStartSignInActivity()
 
             }
+
+            val QS = view.findViewById<ConstraintLayout>(R.id.QuienesSomosBTN)
+            QS.setOnClickListener {
+                val builder_qs = AlertDialog.Builder(this)
+                val Inflater_qs = LayoutInflater.from(this)
+
+                // Infla el layout sin adjuntarlo a un padre
+                val view_qs = Inflater_qs.inflate(R.layout.quienes_somos, null, false)
+
+                builder_qs.setView(view_qs)
+                val dialog_qs = builder_qs.create()
+                dialog_qs.show()
+
+                // Encuentra el elemento que deseas que cierre el diálogo
+                val ret = view_qs.findViewById<ConstraintLayout>(R.id.constraintLayout2)
+                ret.setOnClickListener { dialog_qs.dismiss() }
+
+            }
+
+            // Encuentra el elemento que deseas que cierre el diálogo
+            val ret = view.findViewById<ConstraintLayout>(R.id.constraintLayout2)
+            ret.setOnClickListener { dialog.dismiss() }
         }
     }
 

@@ -1,14 +1,9 @@
 package com.example.contener
 
 import android.content.ContentValues
-import com.example.contener.HomePrincipal
-import com.example.contener.MainActivity
-import com.example.contener.R
-import com.example.contener.formularioHome
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -71,7 +66,7 @@ class Home : AppCompatActivity() {
 
         var userName : String = ""
         var sex : String = ""
-        val checkTerminos = findViewById<CheckBox>(R.id.checkBox)
+        val checkTerminos = findViewById<CheckBox>(R.id.terminoscondiciones)
 
         //Epecemos Boton
         val empecemosButton = findViewById<Button>(R.id.empecemosButton)
