@@ -14,23 +14,30 @@ import androidx.constraintlayout.widget.ConstraintLayout
 class video_landscape_reproductor : AppCompatActivity() {
 
     var modulo = ""
+    var name_video = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_landscape_reproductor)
 
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        //requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         getSupportActionBar()?.hide(); // hide the title bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
         modulo = intent.getStringExtra("modulo").toString()
+        name_video = intent.getStringExtra("name_video").toString()
 
         val videoview : VideoView = findViewById(R.id.videoView2)
             videoview.visibility = View.VISIBLE
             val media : MediaController = MediaController(this)
             media.setAnchorView(videoview)
 
-            val path = Uri.parse("android.resource://com.example.contener/"+R.raw.video)
+            /*val path = Uri.parse("android.resource://com.example.contener/"+R.raw.)
             videoview.setMediaController(media)
             videoview.setVideoURI(path)
+            videoview.start()*/
+
+            val path = Uri.parse("android.resource://" + packageName + "/" + R.raw::class.java.getField(name_video).getInt(null))
+            videoview.setVideoURI(path)
+            videoview.setMediaController(media)
             videoview.start()
 
             videoview.setOnClickListener {

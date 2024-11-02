@@ -36,7 +36,8 @@ public class BDData extends SQLiteOpenHelper {
             "SEX TEXT, " +
             "DATEBORNLASTSON TEXT," +
             "ACTIVE BOOLEAN," +
-            "PROVIDER TEXT)";
+            "PROVIDER TEXT," +
+            "TERM TEXT)";
     //TODO: colocar correctamente los tipos de datos
 
     public BDData(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -80,8 +81,10 @@ public class BDData extends SQLiteOpenHelper {
 
         registros.moveToFirst();
 
-        for (int j = 0; j < registros.getColumnCount(); j++) {
-            value.put(registros.getColumnName(j), registros.getString(j));
+        if (registros.getCount()!=0) {
+            for (int j = 0; j < registros.getColumnCount(); j++) {
+                value.put(registros.getColumnName(j), registros.getString(j));
+            }
         }
 
         return value;

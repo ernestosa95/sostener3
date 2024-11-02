@@ -19,12 +19,12 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="145dp"
+            android:layout_marginStart="135dp"
             android:layout_marginBottom="145dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/optionsBTN"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -51,10 +51,11 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTXT">
+        app:layout_constraintTop_toBottomOf="@+id/textView30">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,6 +84,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageMaternidad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/roundedImageCardMini"
+                        app:srcCompat="@drawable/maternidad" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -102,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="Maternidad"
+                    android:text="Derechos"
                     android:textColor="#A9A4BE"
                     app:layout_constraintBottom_toBottomOf="@+id/textView15"
                     app:layout_constraintStart_toEndOf="@+id/textView15"
@@ -134,26 +146,25 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/interes3"
+                android:id="@+id/interes2"
                 android:layout_width="350dp"
                 android:layout_height="150dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/backgroud_card1">
 
                 <TextView
-                    android:id="@+id/textView28"
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="25dp"
-                    android:text="Módulo:"
-                    android:textColor="#756CAF"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/constraintLayout8"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginStart="10dp"
+                    android:text="Embarazo"
+                    android:textColor="#A9A4BE"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView35"
+                    app:layout_constraintStart_toEndOf="@+id/textView35"
+                    app:layout_constraintTop_toTopOf="@+id/textView35" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout8"
+                    android:id="@+id/constraintLayout10"
                     android:layout_width="125dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="10dp"
@@ -164,21 +175,34 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageEmbarazo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/roundedImageCardMini"
+                        app:srcCompat="@drawable/embarazo" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/textView31"
+                    android:id="@+id/textView35"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="Posparto"
-                    android:textColor="#A9A4BE"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView28"
-                    app:layout_constraintStart_toEndOf="@+id/textView28"
-                    app:layout_constraintTop_toTopOf="@+id/textView28" />
+                    android:layout_marginTop="25dp"
+                    android:text="Módulo:"
+                    android:textColor="#756CAF"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout10"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView32"
+                    android:id="@+id/textView36"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -186,20 +210,20 @@
                     android:text="Este es un texto ejemplo que explica brevemente el contenido"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView28"
-                    app:layout_constraintTop_toBottomOf="@+id/textView28" />
+                    app:layout_constraintStart_toStartOf="@+id/textView35"
+                    app:layout_constraintTop_toBottomOf="@+id/textView35" />
 
                 <Button
-                    android:id="@+id/POSPARTOBTN"
+                    android:id="@+id/EMBARAZOBTN"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:background="@drawable/background_button_degradado"
                     android:text="Ver módulo"
                     android:textColor="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView32"
-                    app:layout_constraintStart_toStartOf="@+id/textView32"
-                    app:layout_constraintTop_toBottomOf="@+id/textView32" />
+                    app:layout_constraintEnd_toEndOf="@+id/textView36"
+                    app:layout_constraintStart_toStartOf="@+id/textView36"
+                    app:layout_constraintTop_toBottomOf="@+id/textView36" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -232,6 +256,18 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageParto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/roundedImageCardMini"
+                        app:srcCompat="@drawable/parto" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -273,25 +309,26 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/interes2"
+                android:id="@+id/interes3"
                 android:layout_width="350dp"
                 android:layout_height="150dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/backgroud_card1">
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textView28"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="Embarazo"
-                    android:textColor="#A9A4BE"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView35"
-                    app:layout_constraintStart_toEndOf="@+id/textView35"
-                    app:layout_constraintTop_toTopOf="@+id/textView35" />
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Módulo:"
+                    android:textColor="#756CAF"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout8"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout10"
+                    android:id="@+id/constraintLayout8"
                     android:layout_width="125dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="10dp"
@@ -302,22 +339,33 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imagePosparto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/roundedImageCardMini"
+                        app:srcCompat="@drawable/posparto" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/textView35"
+                    android:id="@+id/textView31"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="25dp"
-                    android:text="Módulo:"
-                    android:textColor="#756CAF"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toEndOf="@+id/constraintLayout10"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:text="Posparto"
+                    android:textColor="#A9A4BE"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView28"
+                    app:layout_constraintStart_toEndOf="@+id/textView28"
+                    app:layout_constraintTop_toTopOf="@+id/textView28" />
 
                 <TextView
-                    android:id="@+id/textView36"
+                    android:id="@+id/textView32"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -325,20 +373,101 @@
                     android:text="Este es un texto ejemplo que explica brevemente el contenido"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView35"
-                    app:layout_constraintTop_toBottomOf="@+id/textView35" />
+                    app:layout_constraintStart_toStartOf="@+id/textView28"
+                    app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
                 <Button
-                    android:id="@+id/EMBARAZOBTN"
+                    android:id="@+id/POSPARTOBTN"
                     android:layout_width="0dp"
                     android:layout_height="35dp"
                     android:background="@drawable/background_button_degradado"
                     android:text="Ver módulo"
                     android:textColor="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/textView36"
-                    app:layout_constraintStart_toStartOf="@+id/textView36"
-                    app:layout_constraintTop_toBottomOf="@+id/textView36" />
+                    app:layout_constraintEnd_toEndOf="@+id/textView32"
+                    app:layout_constraintStart_toStartOf="@+id/textView32"
+                    app:layout_constraintTop_toBottomOf="@+id/textView32" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/interes30"
+                android:layout_width="350dp"
+                android:layout_height="150dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/backgroud_card1">
+
+                <TextView
+                    android:id="@+id/textView280"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Módulo:"
+                    android:textColor="#756CAF"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toEndOf="@+id/constraintLayout80"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout80"
+                    android:layout_width="125dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_redondo_back6"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imageLactancia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/roundedImageCardMini"
+                        app:srcCompat="@drawable/lactancia" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView310"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Lactancia"
+                    android:textColor="#A9A4BE"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView280"
+                    app:layout_constraintStart_toEndOf="@+id/textView280"
+                    app:layout_constraintTop_toTopOf="@+id/textView280" />
+
+                <TextView
+                    android:id="@+id/textView320"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="Este es un texto ejemplo que explica brevemente el contenido"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView280"
+                    app:layout_constraintTop_toBottomOf="@+id/textView280" />
+
+                <Button
+                    android:id="@+id/LACTANCIABTN"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/background_button_degradado"
+                    android:text="Ver módulo"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/textView320"
+                    app:layout_constraintStart_toStartOf="@+id/textView320"
+                    app:layout_constraintTop_toBottomOf="@+id/textView320" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
@@ -380,6 +509,7 @@
         android:layout_marginStart="50dp"
         android:layout_marginTop="35dp"
         android:background="@color/background1"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedImage" />
@@ -388,26 +518,26 @@
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
         android:text="Módulos"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/textView30"
         app:layout_constraintStart_toStartOf="@+id/textView30"
-        app:layout_constraintTop_toTopOf="@+id/perfilimage" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView30"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="50dp"
         android:gravity="center_horizontal"
         android:text="Conoce nuestra variedad de contenido"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/perfilimage"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -37,9 +37,12 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
+
             android:name=".formularioHome"
             android:exported="false"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+
+            />
         <activity
             android:name=".Home"
             android:exported="false" />

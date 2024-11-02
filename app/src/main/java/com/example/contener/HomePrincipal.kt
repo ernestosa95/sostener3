@@ -89,7 +89,7 @@ class HomePrincipal : AppCompatActivity() {
         val btnMaternidad : Button = findViewById(R.id.MATERNIDADBTN)
         btnMaternidad.setOnClickListener {
             val intent = Intent(this, Modulo::class.java)
-            intent.putExtra("modulo", "Maternidad")
+            intent.putExtra("modulo", "Derechos")
             startActivity(intent)
             finish()
         }
@@ -114,6 +114,14 @@ class HomePrincipal : AppCompatActivity() {
         btnEmbarazo.setOnClickListener {
             val intent = Intent(this, Modulo::class.java)
             intent.putExtra("modulo", "Embarazo")
+            startActivity(intent)
+            finish()
+        }
+
+        val btnLactancia : Button = findViewById(R.id.LACTANCIABTN)
+        btnLactancia.setOnClickListener {
+            val intent = Intent(this, Modulo::class.java)
+            intent.putExtra("modulo", "Lactancia")
             startActivity(intent)
             finish()
         }

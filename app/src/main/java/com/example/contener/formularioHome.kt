@@ -9,9 +9,11 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -19,11 +21,14 @@ import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.RadioButton
+import android.widget.ScrollView
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.marginBottom
 import com.example.contener.Home
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -91,14 +96,17 @@ class formularioHome : AppCompatActivity() {
             }
         })
 
+
+
         //Opciones del spiner
 
         //Opciones del spiner
         val Opc = ArrayList<String>()
         Opc.add("- seleccionar -")
-        Opc.add("FEMENINO")
-        Opc.add("MASCULINO")
-        Opc.add("X")
+        Opc.add("MUJER")
+        Opc.add("VARON")
+        Opc.add("SIN DEFINIR")
+        Opc.add("PREFIERO NO DECIRLO")
 
         // Cargo el spinner con los datos
 
@@ -142,6 +150,7 @@ class formularioHome : AppCompatActivity() {
         if (dataUserCache["CITY"]!=""){
             localidades.setText(dataUserCache["CITY"])
         }
+
         if (dataUserCache["DATEBORNLASTSON"]!=""){
             dateLastSon.text = dataUserCache["DATEBORNLASTSON"]
         }
@@ -313,6 +322,7 @@ class formularioHome : AppCompatActivity() {
                                 dataUser.put("OHTERCITY", "")
                                 dataUser.put("SEX", sex)
                                 dataUser.put("DATEBORNLASTSON", fechaUltimoNacimiento)
+                                dataUser.put("TERM", "acepto")
                                 adminBDData!!.updateDataUser(dataUser)
 
                                 val intent = Intent(this, HomePrincipal::class.java)

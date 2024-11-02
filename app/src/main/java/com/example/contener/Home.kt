@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -70,25 +71,34 @@ class Home : AppCompatActivity() {
 
         var userName : String = ""
         var sex : String = ""
+        val checkTerminos = findViewById<CheckBox>(R.id.checkBox)
 
         //Epecemos Boton
         val empecemosButton = findViewById<Button>(R.id.empecemosButton)
         empecemosButton.setOnClickListener {
-            if (user != null) {
-                //Toast.makeText(this, adminBDData!!.getDataUser(user.uid)["BIRTHDATE"] + "666", Toast.LENGTH_SHORT ).show()
-                if (adminBDData!!.getDataUser(user.uid)["BIRTHDATE"]?.length == 0 || adminBDData!!.getDataUser(user.uid)["BIRTHDATE"].isNullOrBlank()){
-                //if (myPreferences.getString("sex", "unknown").equals("unknown") || myPreferences.getString("p1", "unknown").equals("unknown") || sex == "") {
-                    //val myEditor = myPreferences.edit()
-                    //myEditor.putString("names", userName);
-                    //myEditor.commit();
-                    val intent = Intent(this, formularioHome::class.java)
-                    startActivity(intent)
-                    finish()
-                }else{
-                    val intent = Intent(this, HomePrincipal::class.java)
-                    startActivity(intent)
-                    finish()
+            if (checkTerminos.isChecked) {
+
+                if (user != null) {
+                    //Toast.makeText(this, adminBDData!!.getDataUser(user.uid)["BIRTHDATE"] + "666", Toast.LENGTH_SHORT ).show()
+                    if (adminBDData!!.getDataUser(user.uid)["BIRTHDATE"]?.length == 0 || adminBDData!!.getDataUser(
+                            user.uid
+                        )["BIRTHDATE"].isNullOrBlank()
+                    ) {
+                        //if (myPreferences.getString("sex", "unknown").equals("unknown") || myPreferences.getString("p1", "unknown").equals("unknown") || sex == "") {
+                        //val myEditor = myPreferences.edit()
+                        //myEditor.putString("names", userName);
+                        //myEditor.commit();
+                        val intent = Intent(this, formularioHome::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        val intent = Intent(this, HomePrincipal::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
                 }
+            }else{
+                Toast.makeText(this, "Debe aceptar los terminos y condiciones para avanzar", Toast.LENGTH_LONG).show()
             }
         }
 

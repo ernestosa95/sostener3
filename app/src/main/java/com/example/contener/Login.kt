@@ -145,9 +145,12 @@ class MainActivity : AppCompatActivity() {
 
         if (currentUser != null) {
             // The user is already signed in, navigate to MainActivity
-            val intent = Intent(this, Home::class.java)
-            startActivity(intent)
-            finish() // finish the current activity to prevent the user from coming back to the SignInActivity using the back button
+            val dataUserCache = adminBDData!!.getDataUser(auth.uid)
+            if (!dataUserCache["TERM"].isNullOrBlank() || dataUserCache["TERM"]=="acepto") {
+                val intent = Intent(this, HomePrincipal::class.java)
+                startActivity(intent)
+                finish() // finish the current activity to prevent the user from coming back to the SignInActivity using the back button
+            }
         }
 
         val signInButton = findViewById<ConstraintLayout>(R.id.googleButton)
