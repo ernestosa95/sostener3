@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -77,6 +78,21 @@ class Modulo : AppCompatActivity() {
             }else if (element.contains(".mp3")){
                 ly.addView(CreateButtonViewAudio(element.replace(".mp3", "")))
             }
+        }
+
+        if (modulo.equals("Embarazo")) {
+            val Inflater = LayoutInflater.from(this)
+            val view: View = Inflater.inflate(R.layout.button_dowdonald, null)
+
+            var plandeparto = view.findViewById<ConstraintLayout>(R.id.planparto)
+            plandeparto.setOnClickListener {
+                var url =
+                    "https://docs.google.com/document/d/1ngX69WftCLy02mDWwFHrlkMvnxP4Vh3kulZsEEkZk3A/edit?usp=sharing"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                this.startActivity(intent)
+            }
+
+            ly.addView(view)
         }
 
         var videoA : ConstraintLayout = findViewById(R.id.video1)

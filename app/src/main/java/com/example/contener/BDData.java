@@ -104,6 +104,20 @@ public class BDData extends SQLiteOpenHelper {
         return value;
     }
 
+    public boolean existsUserAndAceptTerms(String uid){
+        Boolean value = false;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String search = "SELECT * FROM USERS WHERE UID='"+uid+"' AND TERM='acepto'";
+        Cursor registros = db.rawQuery(search, null);
+
+        if (registros.getCount()==1){
+            value = true;
+        }
+
+        return value;
+    }
+
 }
 
     /*//----------------------------------------------------------------------------------------------

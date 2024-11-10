@@ -23,6 +23,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.facebook.login.Login
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -229,8 +230,14 @@ class HomePrincipal : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val intent = Intent(this, Home::class.java)
-        startActivity(intent)
-        finish()
+        val dataUser : ContentValues = ContentValues()
+        dataUser.put("UID", auth.uid)
+        dataUser.put("ACTIVE", false)
+        var adminBDData: BDData? = null
+        //Base de datos
+        adminBDData = BDData(baseContext, "BDData", null, 1)
+        adminBDData!!.updateDataUser(dataUser)
+
+        signOutAndStartSignInActivity()
     }
 }

@@ -293,8 +293,13 @@ class MainActivity : AppCompatActivity() {
                         adminBDData!!.setDataUser(dataUser)
                     }
 
-                    startActivity(Intent(this, Home:: class.java))
-                    finish()
+                    if (adminBDData!!.existsUserAndAceptTerms(auth.uid)){
+                        startActivity(Intent(this, HomePrincipal:: class.java))
+                        finish()
+                    }else {
+                        startActivity(Intent(this, Home::class.java))
+                        finish()
+                    }
                 } else {
                     Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }

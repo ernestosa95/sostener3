@@ -12,9 +12,9 @@
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
         android:visibility="visible"
+
+
         app:layout_constraintBottom_toTopOf="@+id/siguienteFormHomeButton"
-
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,6 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -218,13 +219,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="50dp"
+                        android:buttonTint="@color/ic_launcher_background"
+                        android:shadowColor="#FDFDFD"
                         android:text="Si"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#FFFFFF"
+                        android:textColorLink="#000000" />
 
                     <RadioButton
                         android:id="@+id/noHijos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/ic_launcher_background"
                         android:text="No"
                         android:textColor="#FFFFFF" />
                 </RadioGroup>
@@ -269,6 +274,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="25dp"
+                        android:buttonTint="@color/ic_launcher_background"
                         android:shadowColor="#FFFFFF"
                         android:text="Si"
                         android:textColor="#FFFFFF" />
@@ -278,6 +284,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="25dp"
+                        android:buttonTint="@color/ic_launcher_background"
                         android:text="No"
                         android:textColor="#FFFFFF" />
 
@@ -285,6 +292,7 @@
                         android:id="@+id/noloseEmbarazo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/ic_launcher_background"
                         android:text="No lo se"
                         android:textColor="#FFFFFF" />
                 </RadioGroup>
