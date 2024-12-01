@@ -41,24 +41,19 @@ class Modulo : AppCompatActivity() {
         //Declaracion de recursos para los modulos
         val recursos = resources
         // MODULO DERECHOS
-        val Derechos = arrayOf("derechos1.mp4")
+        val Derechos = arrayOf("derechos_durante_el_nacimiento.mp4")
 
         // MODULO EMBARAZO
-        val Embarazo = arrayOf("${recursos.getString(R.string.consejo_embarazo)}.txt")
+        val Embarazo = arrayOf("")
 
         //MODULO PARTO
-        val Parto = arrayOf("audio.mp3",
-            "${recursos.getString(R.string.consejo_embarazo)}.txt",
-            "derechos1.mp4")
+        val Parto = arrayOf("")
 
         // MODULO POSTPARTO
-        val Posparto = arrayOf("entrevista_hospital.mp4",
-            "derechos1.mp4",
-            "${recursos.getString(R.string.consejo_embarazo)}.txt")
+        val Posparto = arrayOf("")
 
         //MODULO LACTANCIA
-        val Lactancia = arrayOf("entrevista_hospital.mp4",
-            "entrevista_lactancia.mp4")
+        val Lactancia = arrayOf("extraccion_de_leche.mp4")
 
         val contenido = mapOf("Derechos" to Derechos,
             "Posparto" to Posparto,

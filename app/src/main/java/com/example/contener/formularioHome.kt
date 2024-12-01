@@ -96,8 +96,6 @@ class formularioHome : AppCompatActivity() {
             }
         })
 
-
-
         //Opciones del spiner
 
         //Opciones del spiner
