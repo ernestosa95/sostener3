@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -12,6 +13,8 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.VideoView
+import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -19,6 +22,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.random.Random
 
 class Home : AppCompatActivity() {
 
@@ -97,7 +101,8 @@ class Home : AppCompatActivity() {
             }
         }
 
-
+        // Lógica para mostrar el pop-up del video de bienvenida
+        showWelcomeVideoPopup()
     }
 
     private fun signOutAndStartSignInActivity() {
@@ -108,6 +113,52 @@ class Home : AppCompatActivity() {
             val intent = Intent(this@Home, MainActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    private fun showWelcomeVideoPopup() {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val hasShownWelcomeVideo = preferences.getBoolean("hasShownWelcomeVideo", false)
+
+        // Solo muestra el video si no se ha mostrado antes
+        if (!hasShownWelcomeVideo) {
+            val dialogBuilder = AlertDialog.Builder(this)
+            val inflater = this.layoutInflater
+            val dialogView = inflater.inflate(R.layout.dialog_welcome_video, null)
+            dialogBuilder.setView(dialogView)
+
+            val videoView = dialogView.findViewById<VideoView>(R.id.welcome_video_view)
+            val btnClose = dialogView.findViewById<Button>(R.id.btn_close_video)
+
+            // --- Lógica para seleccionar un video aleatorio ---
+            val videoResources = listOf(R.raw.welcome_video_1, R.raw.welcome_video_2) // Lista de tus videos
+            val randomIndex = Random.nextInt(videoResources.size) // Genera un índice aleatorio (0 o 1)
+            val selectedVideoResId = videoResources[randomIndex] // Obtiene el ID del recurso del video seleccionado
+
+            val videoPath = "android.resource://" + packageName + "/" + selectedVideoResId
+            val uri = Uri.parse(videoPath)
+            // --- Fin de la lógica de selección aleatoria ---
+
+            videoView.setVideoURI(uri)
+            videoView.start() // Inicia la reproducción automáticamente
+
+            // Opcional: Para que el video se repita
+            videoView.setOnPreparedListener { mp ->
+                mp.isLooping = true
+            }
+
+            val alertDialog = dialogBuilder.create()
+            alertDialog.setCancelable(false) // Evita que se cierre al tocar fuera
+
+            btnClose.setOnClickListener {
+                videoView.stopPlayback() // Detiene la reproducción del video
+                alertDialog.dismiss() // Cierra el pop-up
+            }
+
+            alertDialog.show()
+
+            // Marca que el video de bienvenida ya ha sido mostrado
+            preferences.edit().putBoolean("hasShownWelcomeVideo", true).apply()
         }
     }
 
